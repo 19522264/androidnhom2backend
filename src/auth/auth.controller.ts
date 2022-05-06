@@ -32,6 +32,7 @@ export class AuthController {
                 throw new BadRequestException("invalid user")
             }
             const jwt = this.jwtService.signAsync(user)
+            
             //response.cookie('jwt' , jwt, {httpOnly: true})
             return jwt
         }
