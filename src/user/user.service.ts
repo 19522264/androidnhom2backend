@@ -8,12 +8,7 @@ export class UserService {
     constructor(private prismaService : PrismaService){}
 
     async getUserInfo(email : string){
-        const userinfo =  this.prismaService.userprofile.findFirst({where: {email: email}})
-        if (!userinfo) {
-            throw new BadRequestException("user not found");
-        }
-        return userinfo
-        
+        return await this.prismaService.userprofile.findFirst({where: {email: email}})
     }
     async createUser(email: string, displayName : string, photoURL : string){
         return await this.prismaService.userprofile.create({data:
