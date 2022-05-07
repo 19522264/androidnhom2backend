@@ -5,6 +5,6 @@ import { AuthGuard } from '@nestjs/passport';
 export class AppController {
   @Get()
   gethello(){
-      return "Heno"
+      return "Henoa"
   }
 }

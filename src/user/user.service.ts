@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 
 import { PrismaService } from 'src/prisma/prisma.service';
 import { Userdto } from './dto/user.dto';
@@ -8,13 +8,19 @@ export class UserService {
     constructor(private prismaService : PrismaService){}
 
     async getUserInfo(email : string){
-        return await this.prismaService.users.findFirst({where: {email: email}})
+        const userinfo =  this.prismaService.userprofile.findFirst({where: {email: email}})
+        if (!userinfo) {
+            throw new BadRequestException("user not found");
+        }
+        return userinfo
+        
     }
-    async createUser(userdto: Userdto){
-        return await this.prismaService.users.create({data:
+    async createUser(email: string, displayName : string, photoURL : string){
+        return await this.prismaService.userprofile.create({data:
             {
-                password: userdto.password,
-                email: userdto.email
+                email: email,
+                displayName: displayName,
+                photoURL: photoURL,
             }
         })
         
