@@ -7,10 +7,8 @@ export class UserController {
     constructor(private readonly userService: UserService) {
 
     }
-    @Post()
-    getUser(
-        @Body("email") email:  string
-    ){
+    @Get(":email")
+    getUser(@Param("email") email : string){
         return this.userService.getUserInfo(email)
     }
 }
