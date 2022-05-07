@@ -6,7 +6,6 @@ export class AuthService {
     constructor(private prismaService : PrismaService){}
     async registerUser(userdto: Userdto) {
         const user = await this.prismaService.users.findFirst({where: { email: userdto.email }})
-        //console.log((await user).email)
         if (user){
             throw new BadRequestException('user existed')
         }

@@ -5,7 +5,6 @@ import { AuthService } from './auth.service';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { Response } from 'express';
-
 @Controller('auth')
 export class AuthController {
     constructor(
@@ -17,7 +16,12 @@ export class AuthController {
         @Body("email") email: string,
         @Body("password") password: string){
             const hashedPassword =  bcrypt.hashSync(password, 12);
-            return this.authService.registerUser(new Userdto(email, hashedPassword))
+            const user = await this.authService.registerUser(new Userdto(email, hashedPassword))
+            if (!user){
+                throw new BadRequestException("user existed")
+            }
+            const jwt = this.jwtService.signAsync(user);
+            return jwt
     }
     @Post("login")
     async login(
@@ -33,7 +37,6 @@ export class AuthController {
                 throw new BadRequestException("invalid user")
             }
             const jwt = this.jwtService.signAsync(user)
-            
             //response.cookie('jwt' , jwt, {httpOnly: true})
             return jwt
         }
