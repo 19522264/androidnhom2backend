@@ -5,6 +5,7 @@ import { AuthService } from './auth.service';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { Response } from 'express';
+
 @Controller('auth')
 export class AuthController {
     constructor(
