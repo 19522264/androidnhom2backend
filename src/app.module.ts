@@ -7,6 +7,7 @@ import { UserModule } from './user/user.module';
 import { UserService } from './user/user.service';
 import { AuthModule } from './auth/auth.module';
 import { UserController } from './user/user.controller';
+import { GcloudservicesService } from './gcloudservices/gcloudservices.service';
 
 @Global()
 @Module({
@@ -15,6 +16,6 @@ import { UserController } from './user/user.controller';
     isGlobal: true,
   }), AuthModule],
   controllers: [AppController, UserController],
-  providers: [AppService, UserService],
+  providers: [AppService, UserService, GcloudservicesService],
 })
 export class AppModule {}

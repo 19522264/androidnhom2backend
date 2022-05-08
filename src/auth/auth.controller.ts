@@ -1,15 +1,18 @@
-import { BadRequestException, Controller, Res } from '@nestjs/common';
+import { BadRequestException, Controller, Header, Headers, Res } from '@nestjs/common';
 import { Body, Post } from '@nestjs/common';
 import { Userdto } from 'src/user/dto/user.dto';
 import { AuthService } from './auth.service';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { Response } from 'express';
+import { PrismaService } from 'src/prisma/prisma.service';
+import { UserService } from 'src/user/user.service';
 @Controller('auth')
 export class AuthController {
     constructor(
         private readonly authService: AuthService,
-        private jwtService: JwtService
+        private jwtService: JwtService,
+        private userService: UserService
         ){}
     @Post("register")
     async register(
@@ -37,7 +40,15 @@ export class AuthController {
                 throw new BadRequestException("invalid user")
             }
             const jwt = this.jwtService.signAsync(user)
-            //response.cookie('jwt' , jwt, {httpOnly: true})
             return jwt
+    }
+    @Post("getwhenrestartapp")
+    async getwhenrestartapp(
+        @Headers("Authorization") auth : string
+    ){
+        const decode_auth =  this.jwtService.decode(auth.slice(7))
+        if (decode_auth) {
+            return this.userService.getUserInfo(decode_auth['email'])
         }
+    }
 }

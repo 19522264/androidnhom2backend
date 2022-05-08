@@ -1,9 +1,11 @@
-import { BadRequestException, Body, Controller, Get, Head, Param, Post, Res } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Head, Header, Headers, Param, Post, Res, UseGuards } from '@nestjs/common';
 import { Userdto } from './dto/user.dto';
 import { UserService } from './user.service';
 import { Response } from 'express';
+import { JwtGuard } from 'src/auth/guard';
 
 @Controller('user')
+@UseGuards(JwtGuard)
 export class UserController {
     constructor(private readonly userService: UserService) {}
     @Get(":email")
@@ -25,4 +27,5 @@ export class UserController {
     ) {
         return this.userService.createUser(email, displayName, photoURL)
     }
+
 }
