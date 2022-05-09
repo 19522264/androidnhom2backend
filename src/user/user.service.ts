@@ -17,7 +17,29 @@ export class UserService {
                 displayName: displayName,
                 photoURL: photoURL,
             }
-        })
-        
+        }) 
+    }
+    async searchUsers(keyword: string, email: string) {
+        return await this.prismaService.userprofile.findMany({where: {
+            OR: [
+                {
+                    email: {
+                        contains: keyword
+                    }
+                },
+                {
+                    displayName: {
+                        contains: keyword
+                    }
+                }
+            ],
+            AND: [
+                {
+                    email: {
+                        not: email
+                    }
+                }
+            ]
+        }})
     }
 }

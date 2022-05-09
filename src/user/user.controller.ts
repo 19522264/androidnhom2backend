@@ -27,5 +27,11 @@ export class UserController {
     ) {
         return this.userService.createUser(email, displayName, photoURL)
     }
-
+    @Get('search/:keyword')
+    async Search(
+        @Headers("email") email : string,
+        @Param("keyword") keyword : string,
+    ){
+        return this.userService.searchUsers(keyword, email)
+    }
 }
