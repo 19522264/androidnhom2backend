@@ -17,4 +17,8 @@ model userprofile{
   email String @unique 
   displayName String
   photoURL String
+  listchats String[]
+  listfriends String[]
+  receivedRequest String[]
+  spams String[]
 }
