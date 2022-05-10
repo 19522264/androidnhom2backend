@@ -42,4 +42,25 @@ export class UserService {
             ]
         }})
     }
+    async getListFriends(email: string) {
+        return await this.prismaService.userlistfriends.findUnique({
+            where: {
+                email: email
+            }
+        })
+    }
+    async getSendings(email: string) {
+        return await this.prismaService.userSendingRequest.findUnique({
+            where: {
+                email : email
+            }
+        })
+    }
+    async getReceived(email: string) {
+        return await this.prismaService.userreceivedRequest.findUnique({
+            where: {
+                email : email
+            }
+        })
+    }
 }

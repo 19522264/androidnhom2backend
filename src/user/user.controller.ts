@@ -34,4 +34,34 @@ export class UserController {
     ){
         return this.userService.searchUsers(keyword, email)
     }
+    @Post('myfriends')
+    async getListFriends(
+        @Headers("email") email : string
+    ) {
+        const result = await this.userService.getListFriends(email)
+        if (!result){
+            throw new BadRequestException("user not have friends")
+        }
+        return result
+    }
+    @Post('sendings')
+    async getSendings(
+        @Headers("email") email : string
+    ) {
+        const result = await this.userService.getSendings(email)
+        if (!result){
+            throw new BadRequestException("user not have sendings")
+        }
+        return result
+    }
+    @Post('sendings')
+    async getReceived(
+        @Headers("email") email : string
+    ) {
+        const result = await this.userService.getReceived(email)
+        if (!result){
+            throw new BadRequestException("user not have received")
+        }
+        return result
+    }
 }

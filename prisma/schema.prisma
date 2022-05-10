@@ -17,8 +17,37 @@ model userprofile{
   email String @unique 
   displayName String
   photoURL String
-  listchats String[]
-  listfriends String[]
-  receivedRequest String[]
   spams String[]
+}
+model userlistchats{
+  docid String @id @default(auto()) @map("_id") @db.ObjectId
+  email String @unique
+  listchats String[]
+}
+model userlistfriends{
+  docid String @id @default(auto()) @map("_id") @db.ObjectId
+  email String @unique
+  listfriends String[]
+}
+model userSendingRequest{
+  docid String @id @default(auto()) @map("_id") @db.ObjectId
+  email String @unique
+  sendingRequests String[]
+}
+model userreceivedRequest{
+  docid String @id @default(auto()) @map("_id") @db.ObjectId
+  email String @unique
+  receivedRequest String[]
+}
+model biodetail{
+  docid String @id @default(auto()) @map("_id") @db.ObjectId
+  school String
+}
+model userbio{
+  docid String @id @default(auto()) @map("_id") @db.ObjectId
+  email String @unique
+  work String 
+  school String
+  relationship String
+  birthDay DateTime @default(now())
 }
