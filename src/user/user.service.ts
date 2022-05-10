@@ -100,4 +100,9 @@ export class UserService {
         }
         return status
     }
+    async getAllUsers(email) {
+        return await this.prismaService.userprofile.findMany({where: {
+            email: {not: email}
+        }})
+    }
 }

@@ -71,4 +71,10 @@ export class UserController {
     ){
         return this.userService.createSendings(email, fremail)
     }
+    @Post('all')
+    async getAllUser(
+        @Headers("email") email : string,
+    ){
+        return this.userService.getAllUsers(email)
+    }
 }
