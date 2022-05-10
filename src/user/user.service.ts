@@ -95,7 +95,7 @@ export class UserService {
                 email: fremail,
                 receivedRequest: email
             }})
-            if (create) status =  "sending your request"
+            if (create) status = "sending your request"
             else status = "fail"
         }
         return status
