@@ -64,4 +64,11 @@ export class UserController {
         }
         return result
     }
+    @Post('sendingrequest')
+    async createSending(
+        @Headers("email") email : string,
+        @Body("fremail") fremail : string
+    ){
+        return this.userService.createSendings(email, fremail)
+    }
 }

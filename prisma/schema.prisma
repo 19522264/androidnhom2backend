@@ -17,7 +17,6 @@ model userprofile{
   email String @unique 
   displayName String
   photoURL String
-  spams String[]
 }
 model userlistchats{
   docid String @id @default(auto()) @map("_id") @db.ObjectId
