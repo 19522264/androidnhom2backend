@@ -54,7 +54,7 @@ export class UserController {
         }
         return result
     }
-    @Post('sendings')
+    @Post('recevied')
     async getReceived(
         @Headers("email") email : string
     ) {
