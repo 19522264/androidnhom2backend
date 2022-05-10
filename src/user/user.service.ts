@@ -100,9 +100,16 @@ export class UserService {
         }
         return status
     }
-    async getAllUsers(email) {
+    async getAllUsers(email: string) {
         return await this.prismaService.userprofile.findMany({where: {
             email: {not: email}
         }})
+    }
+    async revokerequest(email: string, fremail: string){
+        const {sendingRequests} = await this.prismaService.userSendingRequest.findUnique({where: {email: email}, select: {sendingRequests: true}})
+        const result = await this.prismaService.userSendingRequest.update({ where: {email: email}, data: {
+            sendingRequests: sendingRequests.filter((e) => e !== fremail)
+        }})
+        return result
     }
 }

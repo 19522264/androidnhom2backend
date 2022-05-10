@@ -77,4 +77,12 @@ export class UserController {
     ){
         return this.userService.getAllUsers(email)
     }
+    @Post('revokerequest')
+    async revokerequest(
+        @Headers("email") email : string,
+        @Body("fremail") fremail : string
+    ) {
+        return this.userService.revokerequest(email, fremail)
+    }
+
 }
