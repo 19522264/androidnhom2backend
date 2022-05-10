@@ -65,21 +65,39 @@ export class UserService {
     }
     async createSendings(email: string, fremail: string){
         const find = await this.prismaService.userSendingRequest.findUnique({where: {email: email}})
+        const find1 = await this.prismaService.userreceivedRequest.findUnique({where: {email: fremail}})
+        let status = ""
         if (find) {
             const update = await this.prismaService.userSendingRequest.update({where: {email: email}, 
                 data:{
                     sendingRequests: {push : fremail}
             }})
-            if (update) return "sending your request"
-            return "fail"
+            if (update) status = "sending your request"
+            status =  "fail"
         }
         else {
             const create = await this.prismaService.userSendingRequest.create({data:{
                 email: email,
                 sendingRequests: fremail
             }})
-            if (create) return "sending your request"
-            return "fail"
+            if (create) status =  "sending your request"
+            else status = "fail"
         }
+        if (find1){
+            const update = await this.prismaService.userreceivedRequest.update({where: {email: fremail}, data: {
+                receivedRequest: {push: email}
+            }})
+            if (update) status = "sending your request"
+            else status =  "fail"
+        }
+        else {
+            const create = await this.prismaService.userreceivedRequest.create({data: {
+                email: fremail,
+                receivedRequest: email
+            }})
+            if (create) status =  "sending your request"
+            else status = "fail"
+        }
+        return status
     }
 }
