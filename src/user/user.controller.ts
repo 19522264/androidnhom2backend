@@ -36,7 +36,7 @@ export class UserController {
     }
     @Get('myfriends/:email')
     async getListFriends(
-        @Headers("email") email : string
+        @Param("email") email : string
     ) {
         const result = await this.userService.getListFriends(email)
         if (!result){
@@ -44,9 +44,9 @@ export class UserController {
         }
         return result
     }
-    @Get('sendings')
+    @Get('sendings/:email')
     async getSendings(
-        @Headers("email") email : string
+        @Param("email") email : string
     ) {
         const result = await this.userService.getSendings(email)
         if (!result){
@@ -54,9 +54,9 @@ export class UserController {
         }
         return result
     }
-    @Get('recevied')
+    @Get('recevied/:email')
     async getReceived(
-        @Headers("email") email : string
+        @Param("email") email : string
     ) {
         const result = await this.userService.getReceived(email)
         if (!result){
@@ -71,7 +71,7 @@ export class UserController {
     ){
         return await this.userService.createSendings(email, fremail)
     }
-    @Get('all')
+    @Get('all/:email')
     async getAllUser(
         @Headers("email") email : string,
     ){
