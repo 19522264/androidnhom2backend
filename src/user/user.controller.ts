@@ -84,6 +84,13 @@ export class UserController {
     ) {
         return await this.userService.revokerequest(email, fremail)
     }
+    @Post('denyrequest')
+    async denyrequest(
+        @Headers("email") email : string,
+        @Body("fremail") fremail : string
+    ) {
+        return await this.userService.revokerequest(fremail, email)
+    }
     @Get('getuserbio/:email/:fremail') 
     async getUserBio (
         @Param("email") email : string,
