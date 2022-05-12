@@ -25,14 +25,14 @@ export class UserController {
         @Body("displayName") displayName : string,
         @Body("photoURL") photoURL: string
     ) {
-        return this.userService.createUser(email, displayName, photoURL)
+        return await this.userService.createUser(email, displayName, photoURL)
     }
     @Get('search/:keyword')
     async Search(
         @Headers("email") email : string,
         @Param("keyword") keyword : string,
     ){
-        return this.userService.searchUsers(keyword, email)
+        return await this.userService.searchUsers(keyword, email)
     }
     @Post('myfriends')
     async getListFriends(
@@ -69,38 +69,37 @@ export class UserController {
         @Headers("email") email : string,
         @Body("fremail") fremail : string
     ){
-        return this.userService.createSendings(email, fremail)
+        return await this.userService.createSendings(email, fremail)
     }
     @Post('all')
     async getAllUser(
         @Headers("email") email : string,
     ){
-        return this.userService.getAllUsers(email)
+        return await this.userService.getAllUsers(email)
     }
     @Post('revokerequest')
     async revokerequest(
         @Headers("email") email : string,
         @Body("fremail") fremail : string
     ) {
-        return this.userService.revokerequest(email, fremail)
+        return await this.userService.revokerequest(email, fremail)
     }
     @Post('getuserbio') 
     async getUserBio (
-        @Body("email") email : string
+        @Body("email") email : string,
+        @Body("fremail") fremail : string
     ){
-        const result =  this.userService.getUserBio(email)
-        if (!result) {
-            throw new BadRequestException('usebio not found')
+        const result1 = await this.userService.getUserBio(fremail);
+        const result2 = await this.userService.checkListFriends(email, fremail)
+        if (result1) {
+            return {
+                ...result1,
+                checked: result2.listfriends.indexOf(fremail)
+            }
         }
         else {
-            const result2 = this.userService.checkListFriends(email)
-            if (result2) {
-                result['friendchecked'] = true
-            }
-            else {
-                result['friendchecked'] = false
-            }
+            throw new BadRequestException("userbio not found")
         }
-        return result
+
     }
 }

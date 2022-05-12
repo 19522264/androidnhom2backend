@@ -112,17 +112,13 @@ export class UserService {
         }})
         return result
     }
-    async getUserBio(email: string){
-        return await this.prismaService.userbio.findUnique({
-            where: {
-                email : email
-            }
-        })
+    async getUserBio(femail: string){
+        return await this.prismaService.userbio.findFirst({where: {email: femail}})
     }
-    async checkListFriends(email: string) {
+    async checkListFriends(email: string, fremail: string) {
         return await this.prismaService.userlistfriends.findFirst({
-            where:{
-                email: email
+            where: {
+                email: email, 
             }
         })
     }
