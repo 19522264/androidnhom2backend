@@ -50,11 +50,28 @@ export class UserService {
         })
     }
     async getSendings(email: string) {
-        return await this.prismaService.userSendingRequest.findUnique({
+        let users = []
+        const lists =  await this.prismaService.userSendingRequest.findUnique({
             where: {
                 email : email
+            },
+            select: {
+                sendingRequests: true
             }
         })
+        if (lists) {
+            for(const index of lists.sendingRequests){
+                const user = await this.prismaService.userprofile.findUnique({
+                    where: {
+                        email: index
+                    }
+                })
+                users.push(user)
+            }
+            console.log(users)
+        }
+        if (users.length !== 0) return users
+        return null
     }
     async getReceived(email: string) {
         return await this.prismaService.userreceivedRequest.findUnique({
