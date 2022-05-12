@@ -112,4 +112,12 @@ export class UserService {
         }})
         return result
     }
+    async getUserBio(email: string){
+        return await this.prismaService.userbio.findUnique({
+            where: {
+                email : email
+            }
+        })
+        
+    }
 }

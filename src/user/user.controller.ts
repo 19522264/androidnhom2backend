@@ -84,5 +84,13 @@ export class UserController {
     ) {
         return this.userService.revokerequest(email, fremail)
     }
-
+    @Post('getuserbio') 
+    async getUserBio (
+        @Body("email") email : string
+    ){
+        const result =  this.userService.getUserBio(email)
+        if (result) {
+            throw new BadRequestException('usebio not found')
+        }
+    }
 }
