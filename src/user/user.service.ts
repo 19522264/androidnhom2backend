@@ -118,6 +118,12 @@ export class UserService {
                 email : email
             }
         })
-        
+    }
+    async checkListFriends(email: string) {
+        return await this.prismaService.userlistfriends.findFirst({
+            where:{
+                email: email
+            }
+        })
     }
 }

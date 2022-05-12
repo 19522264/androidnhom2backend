@@ -89,8 +89,18 @@ export class UserController {
         @Body("email") email : string
     ){
         const result =  this.userService.getUserBio(email)
-        if (result) {
+        if (!result) {
             throw new BadRequestException('usebio not found')
         }
+        else {
+            const result2 = this.userService.checkListFriends(email)
+            if (result2) {
+                result['friendchecked'] = true
+            }
+            else {
+                result['friendchecked'] = false
+            }
+        }
+        return result
     }
 }
