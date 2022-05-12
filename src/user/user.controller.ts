@@ -27,14 +27,14 @@ export class UserController {
     ) {
         return await this.userService.createUser(email, displayName, photoURL)
     }
-    @Get('search/:keyword')
+    @Get('search/:email/:keyword')
     async Search(
-        @Headers("email") email : string,
+        @Param("email") email : string,
         @Param("keyword") keyword : string,
     ){
         return await this.userService.searchUsers(keyword, email)
     }
-    @Post('myfriends')
+    @Get('myfriends/:email')
     async getListFriends(
         @Headers("email") email : string
     ) {
@@ -44,7 +44,7 @@ export class UserController {
         }
         return result
     }
-    @Post('sendings')
+    @Get('sendings')
     async getSendings(
         @Headers("email") email : string
     ) {
@@ -54,7 +54,7 @@ export class UserController {
         }
         return result
     }
-    @Post('recevied')
+    @Get('recevied')
     async getReceived(
         @Headers("email") email : string
     ) {
@@ -71,7 +71,7 @@ export class UserController {
     ){
         return await this.userService.createSendings(email, fremail)
     }
-    @Post('all')
+    @Get('all')
     async getAllUser(
         @Headers("email") email : string,
     ){
@@ -84,22 +84,21 @@ export class UserController {
     ) {
         return await this.userService.revokerequest(email, fremail)
     }
-    @Post('getuserbio') 
+    @Get('getuserbio/:email/:fremail') 
     async getUserBio (
-        @Body("email") email : string,
-        @Body("fremail") fremail : string
+        @Param("email") email : string,
+        @Param("fremail") fremail : string
     ){
         const result1 = await this.userService.getUserBio(fremail);
         const result2 = await this.userService.checkListFriends(email, fremail)
         if (result1) {
-            return {
-                ...result1,
-                checked: result2.listfriends.indexOf(fremail)
-            }
+                return {
+                    ...result1,
+                    checked: result2.listfriends.indexOf(fremail)
+                }
         }
         else {
-            throw new BadRequestException("userbio not found")
+            throw new BadRequestException("user bio")
         }
-
     }
 }
