@@ -105,7 +105,9 @@ export class UserController {
                 }
         }
         else {
-            throw new BadRequestException("user bio")
+            return {
+                checked: result2.listfriends.indexOf(fremail)
+            }
         }
     }
 }
