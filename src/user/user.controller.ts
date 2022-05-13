@@ -99,7 +99,7 @@ export class UserController {
         const result1 = await this.userService.getUserBio(fremail);
         const result2 = await this.userService.checkListFriends(email, fremail)
         let number = -1
-        if (result2.listfriends !== null){
+        if (result2){
             number = result2.listfriends.indexOf(fremail)
         }
         if (result1) {
