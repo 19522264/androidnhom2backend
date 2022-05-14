@@ -102,12 +102,14 @@ export class UserService {
         const find1 = await this.prismaService.userreceivedRequest.findUnique({where: {email: fremail}})
         let status = ""
         if (find) {
-            const update = await this.prismaService.userSendingRequest.update({where: {email: email}, 
-                data:{
-                    sendingRequests: {push : fremail}
-            }})
-            if (update) status = "sending your request"
-            status =  "fail"
+            if (find.sendingRequests.indexOf(fremail) < 0) {
+                const update = await this.prismaService.userSendingRequest.update({where: {email: email}, 
+                    data:{
+                        sendingRequests: {push : fremail}
+                    }})
+                if (update) status = "sending your request"
+                status =  "fail"
+           }
         }
         else {
             const create = await this.prismaService.userSendingRequest.create({data:{
@@ -118,11 +120,13 @@ export class UserService {
             else status = "fail"
         }
         if (find1){
-            const update = await this.prismaService.userreceivedRequest.update({where: {email: fremail}, data: {
-                receivedRequest: {push: email}
-            }})
-            if (update) status = "sending your request"
-            else status =  "fail"
+            if (find1.receivedRequest.indexOf(email) < 0) {
+                const update = await this.prismaService.userreceivedRequest.update({where: {email: fremail}, data: {
+                    receivedRequest: {push: email}
+                }})
+                if (update) status = "sending your request"
+                else status =  "fail"
+            }
         }
         else {
             const create = await this.prismaService.userreceivedRequest.create({data: {
@@ -140,11 +144,14 @@ export class UserService {
         }})
     }
     async revokerequest(email: string, fremail: string){
-        const {sendingRequests} = await this.prismaService.userSendingRequest.findUnique({where: {email: email}, select: {sendingRequests: true}})
-        const result = await this.prismaService.userSendingRequest.update({ where: {email: email}, data: {
-            sendingRequests: sendingRequests.filter((e) => e !== fremail)
-        }})
-        return result
+        const sending = await this.prismaService.userSendingRequest.findUnique({where: {email: email}})
+        if (sending) {
+            const result = await this.prismaService.userSendingRequest.update({ where: {email: email}, data: {
+                sendingRequests: sending.sendingRequests.filter((e) => e !== fremail)
+            }})
+            return result
+        }
+        
     }
     async getUserBio(femail: string){
         return await this.prismaService.userbio.findFirst({where: {email: femail}})
