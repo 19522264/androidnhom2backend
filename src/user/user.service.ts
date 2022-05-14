@@ -187,4 +187,39 @@ export class UserService {
             }
         })
     }
+    async CreateNewListFriend(email : string, fremail : string) {
+        return await this.prismaService.userlistfriends.create({data: {email: email, listfriends: fremail}})
+    }
+    async AddIntoListFriend(email: string, fremail: string){
+        const check = await this.prismaService.userlistfriends.findFirst({where: {email: email}})
+        if (check.listfriends.indexOf(fremail) < 0)
+            return await this.prismaService.userlistfriends.update({where: {email: email}, data: {listfriends: {push: fremail}}})
+        return null
+    }
+    async acceptRequest(email: string, fremail: string){
+        const revoke  = await this.revokerequest(fremail, email)
+        if (revoke === "checkpoint 2"){
+            const result1 = await this.prismaService.userlistfriends.findUnique({where: {email: email}})
+            const result2 = await this.prismaService.userlistfriends.findUnique({where: {email : fremail}})
+            let result3 = null
+            let result4 = null
+            if (!result1){
+                result3 = await this.CreateNewListFriend(email, fremail);
+            }
+            else{
+                result3 = await this.AddIntoListFriend(email, fremail);
+            }
+            if (!result2){
+                result4 = await this.CreateNewListFriend(fremail, email);
+            }
+            else{
+                result4 = await this.AddIntoListFriend(fremail, fremail);
+            }
+            if (result4 && result3){
+                return "OK"
+            }
+            return "try again"
+        }
+        return "try again"
+    }
 }

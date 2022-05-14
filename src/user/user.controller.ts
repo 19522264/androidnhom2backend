@@ -138,4 +138,11 @@ export class UserController {
         console.log(file);
         console.log(body)
     } 
+    @Post("acceptrequest")
+    async acceptRequest(
+        @Headers("email") email : string,
+        @Body("fremail") fremail : string
+    ) {
+        return await this.userService.acceptRequest(email, fremail)
+    }
 }
