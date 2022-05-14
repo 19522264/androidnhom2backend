@@ -68,7 +68,7 @@ export class UserService {
                 })
                 users.push(user)
             }
-            console.log(users)
+            //console.log(users)
         }
         if (users.length !== 0) return users
         return null
@@ -92,7 +92,7 @@ export class UserService {
                 })
                 users.push(user)
             }
-            console.log(users)
+            //console.log(users)
         }
         if (users.length !== 0) return users
         return null
@@ -151,7 +151,7 @@ export class UserService {
             }})
             return result
         }
-        
+
     }
     async getUserBio(femail: string){
         return await this.prismaService.userbio.findFirst({where: {email: femail}})
