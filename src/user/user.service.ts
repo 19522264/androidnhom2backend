@@ -145,13 +145,23 @@ export class UserService {
     }
     async revokerequest(email: string, fremail: string){
         const sending = await this.prismaService.userSendingRequest.findUnique({where: {email: email}})
+        const receiving = await this.prismaService.userreceivedRequest.findUnique({where: {email: fremail}})
+        console.log(sending) 
+        console.log(receiving)
+        let return_ = "begin"
         if (sending) {
             const result = await this.prismaService.userSendingRequest.update({ where: {email: email}, data: {
                 sendingRequests: sending.sendingRequests.filter((e) => e !== fremail)
             }})
-            return result
+            return_ = "checkpoint 1"
         }
-
+        if (receiving) {
+            const result = await this.prismaService.userreceivedRequest.update({where: {email: fremail}, data:{
+                receivedRequest: receiving.receivedRequest.filter((e) => e !== email)
+            }})
+            return_ = "checkpoint 2"
+        }
+        return return_
     }
     async getUserBio(femail: string){
         return await this.prismaService.userbio.findFirst({where: {email: femail}})
