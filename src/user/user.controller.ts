@@ -108,12 +108,12 @@ export class UserController {
             }
         }
         else if (result3) {
-            if (result3.sendingRequests.indexOf(fremail)  >= 0){
+            if (result3.sendingRequests.indexOf(fremail) >= 0){
                 status = "sending"
             }
         }
         else if (result4) {
-            if (result4.receivedRequest.indexOf(fremail)  >= 0){
+            if (result4.receivedRequest.indexOf(fremail) >= 0){
                 status = "recevied"
             } 
         }
@@ -121,10 +121,12 @@ export class UserController {
         if (result1) {
                 return {
                     ...result1,
+                    biostatus : "yes",
                     checked: status
                 }
         }
         return {
+            biostatus : "no",
             checked: status
         }
     }
