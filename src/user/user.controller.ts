@@ -1,8 +1,9 @@
-import { BadRequestException, Body, Controller, Get, Head, Header, Headers, Param, Post, Res, UseGuards } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Head, Header, Headers, Param, Post, Res, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { Userdto } from './dto/user.dto';
 import { UserService } from './user.service';
 import { Response } from 'express';
 import { JwtGuard } from 'src/auth/guard';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('user')
 @UseGuards(JwtGuard)
@@ -98,20 +99,41 @@ export class UserController {
     ){
         const result1 = await this.userService.getUserBio(fremail);
         const result2 = await this.userService.checkListFriends(email, fremail)
-        let number = -1
+        const result3 = await this.userService.checkSendingRequest(email, fremail)
+        const result4 = await this.userService.checkReceivedRequest(email)
+        let status = "none"
         if (result2){
-            number = result2.listfriends.indexOf(fremail)
+            if (result2.listfriends.indexOf(fremail) >= 0){
+                status = "friend"
+            }
         }
+        else if (result3) {
+            if (result3.sendingRequests.indexOf(fremail)  >= 0){
+                status = "sending"
+            }
+        }
+        else if (result4) {
+            if (result4.receivedRequest.indexOf(fremail)  >= 0){
+                status = "recevied"
+            } 
+        }
+
         if (result1) {
                 return {
                     ...result1,
-                    checked: number
+                    checked: status
                 }
         }
-        else {
-            return {
-                checked: number
-            }
+        return {
+            checked: status
         }
     }
+    @Post("postavatar")
+    @UseInterceptors(FileInterceptor('image'))
+    async setUserBio(
+        @UploadedFile() file : any, @Body() body : any
+    ){
+        console.log(file);
+        console.log(body)
+    } 
 }

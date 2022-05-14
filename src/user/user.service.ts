@@ -156,4 +156,18 @@ export class UserService {
             }
         })
     }
+    async checkSendingRequest(email :string, femail: string){
+        return await this.prismaService.userSendingRequest.findFirst({
+            where: {
+                email: email
+            }
+        })
+    }
+    async checkReceivedRequest(email: string) {
+        return await this.prismaService.userreceivedRequest.findFirst({
+            where: {
+                email: email
+            }
+        })
+    }
 }
