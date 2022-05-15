@@ -10,6 +10,9 @@ export class MessageService {
                 participants: {
                     has: email
                 }
+            },
+            orderBy:{
+                createAt: 'asc'
             }
         })
         let result = []
