@@ -12,7 +12,7 @@ export class MessageService {
                 }
             },
             orderBy:{
-                createAt: 'asc'
+                createAt: 'desc'
             }
         })
         let result = []
