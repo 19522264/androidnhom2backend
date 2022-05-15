@@ -1,3 +1,6 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -38,15 +41,34 @@ model userreceivedRequest{
   email String @unique
   receivedRequest String[]
 }
-model biodetail{
-  docid String @id @default(auto()) @map("_id") @db.ObjectId
-  school String
-}
 model userbio{
   docid String @id @default(auto()) @map("_id") @db.ObjectId
   email String @unique
-  work String 
-  school String
-  relationship String
+  work String?
+  school String?
+  relationship String?
   birthDay DateTime @default(now())
+}
+model lastestmessage{
+  docid String @id @default(auto()) @map("_id") @db.ObjectId
+  participants String[]
+  text String
+  createAt DateTime @default(now())
+  system Boolean @default(false)
+  sentBy String?
+  sendTo String?
+}
+model messages {
+  docid String @id @default(auto()) @map("_id") @db.ObjectId
+  id String
+  participants String[]
+  createAt DateTime @default(now())
+  system Boolean @default(false)
+  sentBy String?
+  sendTo String?
+  image String?
+  video String?
+  gif String?
+  type String?
+  text String?
 }

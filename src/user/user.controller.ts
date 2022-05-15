@@ -103,18 +103,24 @@ export class UserController {
         const result4 = await this.userService.checkReceivedRequest(email)
         let status = "none"
         if (result2){
+            console.log(result1)
             if (result2.listfriends.indexOf(fremail) >= 0){
                 status = "friend"
+                console.log(result1)
             }
         }
         else if (result3) {
+            console.log(result2)
             if (result3.sendingRequests.indexOf(fremail) >= 0){
                 status = "sending"
+                console.log(result2)
             }
         }
         else if (result4) {
+            console.log(result3)
             if (result4.receivedRequest.indexOf(fremail) >= 0){
                 status = "recevied"
+                console.log(result3)
             } 
         }
 

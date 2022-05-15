@@ -167,21 +167,21 @@ export class UserService {
         return await this.prismaService.userbio.findFirst({where: {email: femail}})
     }
     async checkListFriends(email: string, fremail: string) {
-        return await this.prismaService.userlistfriends.findFirst({
+        return await this.prismaService.userlistfriends.findUnique({
             where: {
                 email: email, 
             }
         })
     }
     async checkSendingRequest(email :string, femail: string){
-        return await this.prismaService.userSendingRequest.findFirst({
+        return await this.prismaService.userSendingRequest.findUnique({
             where: {
                 email: email
             }
         })
     }
     async checkReceivedRequest(email: string) {
-        return await this.prismaService.userreceivedRequest.findFirst({
+        return await this.prismaService.userreceivedRequest.findUnique({
             where: {
                 email: email
             }
@@ -216,6 +216,27 @@ export class UserService {
                 result4 = await this.AddIntoListFriend(fremail, fremail);
             }
             if (result4 && result3){
+                const arr = [email, fremail]
+                const time = new Date()
+                await this.prismaService.lastestmessage.create({
+                    data: {
+                        participants: arr,
+                        text: "Các bạn đang kết nối trên Exping",
+                        system: true,
+                        sentBy: "system",
+                        createAt: time
+                    }
+                })
+                await this.prismaService.messages.create({
+                    data:{
+                        id: "-1",
+                        participants: arr,
+                        text: "Các bạn đang kết nối trên Exping",
+                        system: true,
+                        sentBy: "system",
+                        createAt: time,
+                    }
+                })
                 return "OK"
             }
             return "try again"
