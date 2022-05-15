@@ -1,4 +1,4 @@
-import { BadRequestException, Controller, Header, Headers, Res } from '@nestjs/common';
+import { BadRequestException, Controller, Get, Header, Headers, Res } from '@nestjs/common';
 import { Body, Post } from '@nestjs/common';
 import { Userdto } from 'src/user/dto/user.dto';
 import { AuthService } from './auth.service';
@@ -42,13 +42,11 @@ export class AuthController {
             const jwt = this.jwtService.signAsync(user)
             return jwt
     }
-    @Post("getwhenrestartapp")
+    @Get("getwhenrestartapp")
     async getwhenrestartapp(
-        @Headers("Authorization") auth : string
+        @Headers("Authorization") auth : string,
+        @Headers("email") email: string
     ){
-        const decode_auth =  this.jwtService.decode(auth.slice(7))
-        if (decode_auth) {
-            return this.userService.getUserInfo(decode_auth['email'])
-        }
+        return await this.userService.getUserInfo(email)
     }
 }
