@@ -100,27 +100,27 @@ export class UserController {
         const result1 = await this.userService.getUserBio(fremail);
         const result2 = await this.userService.checkListFriends(email, fremail)
         const result3 = await this.userService.checkSendingRequest(email, fremail)
-        const result4 = await this.userService.checkReceivedRequest(email)
+        const result4 = await this.userService.checkReceivedRequest(email, fremail)
         let status = "none"
         if (result2){
-            console.log(result1)
+            //console.log(result1)
             if (result2.listfriends.indexOf(fremail) >= 0){
                 status = "friend"
-                console.log(result1)
+                //console.log(result1)
             }
         }
         else if (result3) {
             console.log(result2)
             if (result3.sendingRequests.indexOf(fremail) >= 0){
                 status = "sending"
-                console.log(result2)
+                //console.log(result2)
             }
         }
         else if (result4) {
-            console.log(result3)
+            //console.log(result3)
             if (result4.receivedRequest.indexOf(fremail) >= 0){
                 status = "recevied"
-                console.log(result3)
+                //console.log(result3)
             } 
         }
 

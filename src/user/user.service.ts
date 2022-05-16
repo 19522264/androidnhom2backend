@@ -167,23 +167,32 @@ export class UserService {
         return await this.prismaService.userbio.findFirst({where: {email: femail}})
     }
     async checkListFriends(email: string, fremail: string) {
-        return await this.prismaService.userlistfriends.findUnique({
+        return await this.prismaService.userlistfriends.findFirst({
             where: {
                 email: email, 
+                listfriends: {
+                    has: fremail
+                }
             }
         })
     }
     async checkSendingRequest(email :string, femail: string){
-        return await this.prismaService.userSendingRequest.findUnique({
+        return await this.prismaService.userSendingRequest.findFirst({
             where: {
-                email: email
+                email: email,
+                sendingRequests: {
+                    has: femail
+                }
             }
         })
     }
-    async checkReceivedRequest(email: string) {
-        return await this.prismaService.userreceivedRequest.findUnique({
+    async checkReceivedRequest(email: string, femail: string) {
+        return await this.prismaService.userreceivedRequest.findFirst({
             where: {
-                email: email
+                email: email,
+                receivedRequest: {
+                    has: femail
+                }
             }
         })
     }
