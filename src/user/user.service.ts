@@ -243,4 +243,9 @@ export class UserService {
         }
         return "try again"
     }
+    async getMyBio(email: string){
+        const user = await this.prismaService.userbio.findUnique({where: {email: email}})
+        if (user) return user
+        return "none"
+    }
 }

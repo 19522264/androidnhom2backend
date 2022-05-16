@@ -151,4 +151,10 @@ export class UserController {
     ) {
         return await this.userService.acceptRequest(email, fremail)
     }
+    @Get('mybio/:email') 
+    async getMybio(
+        @Param("email") email : string
+    ){
+        return await this.userService.getMyBio(email)
+    }
 }
