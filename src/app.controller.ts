@@ -13,4 +13,8 @@ export class AppController {
   async getSchool(){
     return await this.prismaService.school.findMany({select: {label: true, value: true}})
   }
+  @Get('city')
+  async getCity(){
+    return await this.prismaService.city.findMany({select: {label: true, value: true}})
+  }
 }

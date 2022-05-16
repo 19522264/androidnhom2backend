@@ -77,3 +77,8 @@ model school{
   label String
   value String
 }
+model city{
+  docid String @id @default(auto()) @map("_id") @db.ObjectId
+  label String
+  value String
+}
