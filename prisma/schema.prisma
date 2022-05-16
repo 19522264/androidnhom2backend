@@ -47,6 +47,7 @@ model userbio{
   from String?
   school String?
   gender String?
+  intro String?
   birthDay DateTime @default(now())
 }
 model lastestmessage{
