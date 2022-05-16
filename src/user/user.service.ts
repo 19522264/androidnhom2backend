@@ -222,7 +222,7 @@ export class UserService {
                 result4 = await this.CreateNewListFriend(fremail, email);
             }
             else{
-                result4 = await this.AddIntoListFriend(fremail, fremail);
+                result4 = await this.AddIntoListFriend(fremail, email);
             }
             if (result4 && result3){
                 const arr = [email, fremail]
