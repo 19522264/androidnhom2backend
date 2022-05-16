@@ -248,4 +248,15 @@ export class UserService {
         if (user) return user
         return "none"
     }
+    async updateMyBio(email : string, intro : string, school : string, from : string, gender : string, birthDay  : Date){
+        const result = await this.prismaService.userbio.update({
+            where: {email: email}, data: {
+                intro: intro,
+                from: from,
+                gender: gender,
+                birthDay: birthDay,
+                school: school
+            }})
+        return "ok"
+    }
 }

@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Get, Head, Header, Headers, Param, Post, Res, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Head, Header, Headers, Param, Post, Put, Res, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { Userdto } from './dto/user.dto';
 import { UserService } from './user.service';
 import { Response } from 'express';
@@ -156,5 +156,16 @@ export class UserController {
         @Param("email") email : string
     ){
         return await this.userService.getMyBio(email)
+    }
+    @Put('updatemybio/:email')
+    async updateMybio(
+        @Param("email") email : string,
+        @Body("intro") intro : string,
+        @Body("school") school : string,
+        @Body("from") from : string,
+        @Body("gender") gender : string,
+        @Body("birthDay") birthDay : Date,
+    ){
+        return await this.userService.updateMyBio(email, intro, school, from, gender, birthDay)
     }
 }
