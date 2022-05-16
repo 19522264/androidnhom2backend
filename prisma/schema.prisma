@@ -72,3 +72,8 @@ model messages {
   type String?
   text String?
 }
+model school{
+  docid String @id @default(auto()) @map("_id") @db.ObjectId
+  label String
+  value String
+}
