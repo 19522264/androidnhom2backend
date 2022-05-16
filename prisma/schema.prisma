@@ -46,7 +46,7 @@ model userbio{
   email String @unique
   from String?
   school String?
-  relationship String?
+  gender String?
   birthDay DateTime @default(now())
 }
 model lastestmessage{
