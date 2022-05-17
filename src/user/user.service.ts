@@ -288,4 +288,28 @@ export class UserService {
         }
         return "error"
     }
+    async getAllFriends(email: string){
+        const result = await this.prismaService.userlistfriends.findUnique({
+            where: {
+                email: email
+            },
+            select: {
+                listfriends: true
+            }
+        })
+        let users = []
+        if (result) {
+            if (result.listfriends.length > 0){
+                for (const index of result.listfriends){
+                    const user = await this.prismaService.userprofile.findUnique({
+                        where: {
+                            email: index
+                        }
+                    })
+                    users.push(user)
+                }
+            }
+        }
+        return users
+    }
 }

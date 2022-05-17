@@ -168,4 +168,11 @@ export class UserController {
     ){
         return await this.userService.updateMyBio(email, intro, school, from, gender, birthDay)
     }
+    @Get('getallfriends/:email')
+    async getAllFriends(
+        @Param("email") email : string
+    )
+    {
+        return await this.userService.getAllFriends(email)
+    }
 }
