@@ -11,14 +11,16 @@ import { GcloudservicesService } from './gcloudservices/gcloudservices.service';
 import { MessageController } from './message/message.controller';
 import { MessageModule } from './message/message.module';
 import { MessageService } from './message/message.service';
+import { MailController } from './mail/mail.controller';
+import { MailModule } from './mail/mail.module';
 
 @Global()
 @Module({
   imports: [UserModule, PrismaModule,  
      ConfigModule.forRoot({
     isGlobal: true,
-  }), AuthModule, MessageModule],
-  controllers: [AppController, UserController, MessageController],
+  }), AuthModule, MessageModule, MailModule],
+  controllers: [AppController, UserController, MessageController, MailController],
   providers: [AppService, UserService, GcloudservicesService, MessageService],
 })
 export class AppModule {}
