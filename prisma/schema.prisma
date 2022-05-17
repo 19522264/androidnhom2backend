@@ -14,13 +14,13 @@ model users {
   uid String @id @default(auto()) @map("_id") @db.ObjectId
   email String @unique
   password String
+  confirm String
 }
 model userprofile{ 
   docid String @id @default(auto()) @map("_id") @db.ObjectId
   email String @unique 
   displayName String
   photoURL String
-  confirm String
 }
 model userlistchats{
   docid String @id @default(auto()) @map("_id") @db.ObjectId
