@@ -175,4 +175,10 @@ export class UserController {
     {
         return await this.userService.getAllFriends(email)
     }
+    @Get('getbarbadge/:email')
+    async getBarBadge(
+        @Param("email") email : string
+    ){
+        return await this.userService.getBarBadge(email)
+    }
 }

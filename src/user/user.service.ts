@@ -312,4 +312,36 @@ export class UserService {
         }
         return users
     }
+    async  getBarBadge(email : string){
+        const friends = await this.prismaService.userlistfriends.findUnique({
+            where: {
+                email: email
+            }
+        })
+        const sendings = await this.prismaService.userSendingRequest.findUnique({
+            where: {
+                email: email
+            }
+        })
+        const received = await this.prismaService.userreceivedRequest.findUnique({
+            where: {
+                email
+            }
+        })
+        let result = {
+            sendings: 0,
+            received: 0,
+            friends: 0
+        }
+        if (friends) {
+            result.friends = friends.listfriends.length
+        }
+        if (sendings) {
+            result.sendings = sendings.sendingRequests.length
+        }
+        if (received){
+            result.received = received.receivedRequest.length
+        }
+        return result
+    }
 }
