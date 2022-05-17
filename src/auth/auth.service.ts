@@ -1,5 +1,6 @@
 import { BadRequestException, Body, ForbiddenException, Injectable, Post } from '@nestjs/common';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
+import { emit } from 'process';
 import { MailService } from 'src/mail/mail.service';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { Userdto } from 'src/user/dto/user.dto';
@@ -12,12 +13,13 @@ export class AuthService {
             throw new BadRequestException('user existed')
         }
         try{
+            const token = Math.floor(1000 + Math.random() * 9000).toString()
             const result =  await this.prismaService.users.create({data: 
                 {
                     email: userdto.email,
-                    password: userdto.password
+                    password: userdto.password,
+                    confirm: token
             }})
-            const token = Math.floor(1000 + Math.random() * 9000).toString()
             await this.mailService.sendUserConfirmation(userdto.email, token);
             return result
         }
@@ -34,5 +36,24 @@ export class AuthService {
         return await this.prismaService.users.findFirst({where: {
             email: Email
         }})
+    }
+    async conFirmUser(email : string, token : string){
+        const result = await this.prismaService.users.findUnique({
+            where: {
+                email: email
+            }
+        })
+        if (result.confirm !== 'confirmed' && result.confirm === token) {
+            const result1 = await this.prismaService.users.update({
+                where: {
+                    email: email
+                },
+                data: {
+                    confirm : 'confirmed'
+                }
+            })
+            return "Xác thực  thành công"
+        }
+        throw new BadRequestException("Hết hạn")
     }
 }

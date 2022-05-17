@@ -11,17 +11,17 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     MailerModule.forRootAsync({
       useFactory: async (config: ConfigService) => ({
         transport: {
-          host: config.get('MAIL_HOST'),
+          host: 'smtp.gmail.com',
           secure: false,
           port: 587,
           requireTLS: true,
           auth: {
-            user: config.get('MAIL_USER'),
-            pass: config.get('MAIL_PASSWORD'),
+            user: 'expingteam@gmail.com',
+            pass: 'exping!exping',
           }
         },
         defaults: {
-          from: `"No Reply" <${config.get('MAIL_FROM')}>`
+          from: `No Reply expingteam@gmail.com`
         },
         template: {
           dir: join(__dirname, 'templates'),

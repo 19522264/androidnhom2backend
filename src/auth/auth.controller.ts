@@ -1,4 +1,4 @@
-import { BadRequestException, Controller, Get, Header, Headers, Res } from '@nestjs/common';
+import { BadRequestException, Controller, Get, Header, Headers, Param, Res } from '@nestjs/common';
 import { Body, Post } from '@nestjs/common';
 import { Userdto } from 'src/user/dto/user.dto';
 import { AuthService } from './auth.service';
@@ -48,5 +48,12 @@ export class AuthController {
         @Headers("email") email: string
     ){
         return await this.userService.getUserInfo(email)
+    }
+    @Get("confirm/:email/:token")
+    async confirmToken(
+        @Param("email") email : string,
+        @Param("token") token : string
+    ){
+        return this.authService.conFirmUser(email, token)
     }
 }
