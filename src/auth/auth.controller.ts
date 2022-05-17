@@ -54,6 +54,14 @@ export class AuthController {
         @Param("email") email : string,
         @Param("token") token : string
     ){
-        return this.authService.conFirmUser(email, token)
+        return await this.authService.conFirmUser(email, token)
+    }
+    @Get("accountstatus/:email")
+    async getAccountStatus(
+        @Param("email") email : string
+    ){
+        const user = await this.authService.findUser(email)
+        if (user.confirm !== "confirmed") return "not confirmed"
+        return user.confirm
     }
 }
