@@ -258,14 +258,34 @@ export class UserService {
         return "none"
     }
     async updateMyBio(email : string, intro : string, school : string, from : string, gender : string, birthDay  : Date){
-        const result = await this.prismaService.userbio.update({
-            where: {email: email}, data: {
-                intro: intro,
-                from: from,
-                gender: gender,
-                birthDay: birthDay,
-                school: school
-            }})
-        return "ok"
+        const find = await this.prismaService.userbio.findUnique({
+            where: {
+                email: email
+            }
+        })
+        if (find){
+            const result = await this.prismaService.userbio.update({
+                where: {email: email}, data: {
+                    intro: intro,
+                    from: from,
+                    gender: gender,
+                    birthDay: birthDay,
+                    school: school
+                }})
+            return "ok"
+        }
+        else {
+            const result = await this.prismaService.userbio.create({
+                data:{
+                    email: email,
+                    from: from,
+                    gender: gender,
+                    birthDay: birthDay,
+                    school: school
+                }
+            })
+            return "ok"
+        }
+        return "error"
     }
 }
