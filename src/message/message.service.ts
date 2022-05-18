@@ -52,7 +52,7 @@ export class MessageService {
                 ]
             },
             orderBy: {
-                createdAt: 'asc'
+                createdAt: 'desc'
             },
         })
         result.forEach((element)  => {
