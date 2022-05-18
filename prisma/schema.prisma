@@ -72,7 +72,6 @@ model messages {
   gif String?
   type String?
   text String?
-  user String?
 }
 model school{
   docid String @id @default(auto()) @map("_id") @db.ObjectId
