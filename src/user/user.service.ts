@@ -225,7 +225,7 @@ export class UserService {
                 result4 = await this.AddIntoListFriend(fremail, email);
             }
             if (result4 && result3){
-                const arr = [email, fremail]
+                const arr =  email > fremail ? [email, fremail] : [fremail, email]
                 const time = new Date()
                 await this.prismaService.lastestmessage.create({
                     data: {

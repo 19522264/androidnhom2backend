@@ -5,7 +5,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class MessageService {
     constructor(private prismaService: PrismaService) {}
     async getLastestMessages(email : string){
-        const mess = await this.prismaService.lastestmessage.findMany({
+        const mess = await this.prismaService.messages.findMany({
             where: {
                 participants: {
                     has: email
@@ -13,7 +13,8 @@ export class MessageService {
             },
             orderBy:{
                 createdAt: 'desc'
-            }
+            },
+            distinct: ['participants']
         })
         let result = []
         for (const index of mess){
