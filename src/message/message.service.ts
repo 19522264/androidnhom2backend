@@ -55,7 +55,7 @@ export class MessageService {
             },
         })
         result.forEach((element)  => {
-                element['_id'] = element.sentBy
+                element['_id'] = element.docid
                 element['user'] = {
                     _id: element.sentBy
                 }
