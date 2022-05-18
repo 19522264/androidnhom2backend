@@ -237,13 +237,12 @@ export class UserService {
                     }
                 })
                 await this.prismaService.messages.create({
-                    data:{
-                        id: "-1",
+                    data: {
                         participants: arr,
                         text: "Các bạn đang kết nối trên Exping",
                         system: true,
-                        sentBy: "system",
-                        createdAt: time,
+                        sentBy: 'system',
+                        createdAt: time
                     }
                 })
                 return "OK"

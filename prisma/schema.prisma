@@ -61,7 +61,7 @@ model lastestmessage{
   sendTo String?
 }
 model messages {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
+  docid String @id @default(auto()) @map("_id") @db.ObjectId
   participants String[]
   createdAt DateTime @default(now())
   system Boolean @default(false)
@@ -72,7 +72,7 @@ model messages {
   gif String?
   type String?
   text String?
-  user String
+  user String?
 }
 model school{
   docid String @id @default(auto()) @map("_id") @db.ObjectId
