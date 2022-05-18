@@ -74,39 +74,39 @@ export class MessageService {
                 type: type
             }
         })
-        const result2 = await this.prismaService.lastestmessage.findFirst({
-            where: {
-                AND: [
-                    {
-                        participants: {
-                            has: sendTo
-                        }
-                    }, 
-                    {
-                        participants: {
-                            has: sentBy
-                        }
-                    }
-                ]
-            }
-            ,
-            select: {
-                docid: true
-            }
-        })
-        const result3 = await this.prismaService.lastestmessage.update({
-            where: {
-                docid: result2.docid
-            },
-            data: {
-                text: text,
-                createdAt: createdAt,
-                system: false,
-                sentBy: sentBy,
-                sendTo: sendTo
-            }
-        })
-        if (result3){
+        // const result2 = await this.prismaService.lastestmessage.findFirst({
+        //     where: {
+        //         AND: [
+        //             {
+        //                 participants: {
+        //                     has: sendTo
+        //                 }
+        //             }, 
+        //             {
+        //                 participants: {
+        //                     has: sentBy
+        //                 }
+        //             }
+        //         ]
+        //     }
+        //     ,
+        //     select: {
+        //         docid: true
+        //     }
+        // })
+        // const result3 = await this.prismaService.lastestmessage.update({
+        //     where: {
+        //         docid: result2.docid
+        //     },
+        //     data: {
+        //         text: text,
+        //         createdAt: createdAt,
+        //         system: false,
+        //         sentBy: sentBy,
+        //         sendTo: sendTo
+        //     }
+        // })
+        if (result){
             return "message sent"
         }
         else throw new BadRequestException("error")
