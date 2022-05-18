@@ -36,7 +36,7 @@ export class MessageService {
         return result
     }
     async getMess(email: string){
-        return await this.prismaService.messages.findMany({
+        const result =  await this.prismaService.messages.findMany({
             where:{
                 participants: {
                     has: email
@@ -44,7 +44,9 @@ export class MessageService {
             },
             orderBy: {
                 createAt: 'desc'
-            }
+            },
         })
+        result.forEach(element => element['_id'] = element.id)
+        return result
     }
 }
