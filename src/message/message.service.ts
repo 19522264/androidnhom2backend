@@ -54,7 +54,12 @@ export class MessageService {
                 createdAt: 'desc'
             },
         })
-        result.forEach(element => element['_id'] = element.docid)
+        result.forEach((element)  => {
+                element['_id'] = element.docid
+                element['user'] = element.docid
+            }     
+        )
+        
         return result
     }
     async sendMess(participants : [], createdAt : Date, sentBy : string, sendTo : string, text : string, type : string){
