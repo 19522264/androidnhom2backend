@@ -13,11 +13,12 @@ export class MessageController {
     ){
         return await this.messageService.getLastestMessages(email)
     }
-    @Get('getmess/:email')
+    @Get('getmess/:email/:fremail')
     async getMyMess(
-        @Param("email") email : string
+        @Param("email") email : string,
+        @Param("fremail") fremail : string
     ){
-        return await this.messageService.getMess(email)
+        return await this.messageService.getMess(email, fremail)
     }
     @Post('sendmessage')
     async sendMess(

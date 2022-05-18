@@ -35,12 +35,20 @@ export class MessageService {
         }
         return result
     }
-    async getMess(email: string){
+    async getMess(email: string, fremail: string){
         const result =  await this.prismaService.messages.findMany({
             where:{
-                participants: {
-                    has: email
-                }
+                AND: [
+                    {
+                    participants: {
+                        has: email
+                    }
+                },{
+                    participants: {
+                        has: fremail
+                        }
+                    }
+                ]
             },
             orderBy: {
                 createdAt: 'desc'
