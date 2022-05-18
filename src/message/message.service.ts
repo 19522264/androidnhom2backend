@@ -61,7 +61,6 @@ export class MessageService {
                 }
             }     
         )
-        
         return result
     }
     async sendMess(participants : [], createdAt : Date, sentBy : string, sendTo : string, text : string, type : string){
