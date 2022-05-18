@@ -55,16 +55,15 @@ model lastestmessage{
   docid String @id @default(auto()) @map("_id") @db.ObjectId
   participants String[]
   text String
-  createAt DateTime @default(now())
+  createdAt DateTime @default(now())
   system Boolean @default(false)
   sentBy String?
   sendTo String?
 }
 model messages {
-  docid String @id @default(auto()) @map("_id") @db.ObjectId
-  id String
+  id String @id @default(auto()) @map("_id") @db.ObjectId
   participants String[]
-  createAt DateTime @default(now())
+  createdAt DateTime @default(now())
   system Boolean @default(false)
   sentBy String?
   sendTo String?
@@ -73,6 +72,7 @@ model messages {
   gif String?
   type String?
   text String?
+  user String
 }
 model school{
   docid String @id @default(auto()) @map("_id") @db.ObjectId

@@ -1,4 +1,4 @@
-import { Controller, Get, Header, Headers, Param, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Header, Headers, Param, Post, UseGuards } from '@nestjs/common';
 import { get } from 'http';
 import { JwtGuard } from 'src/auth/guard';
 import { MessageService } from './message.service';
@@ -18,5 +18,16 @@ export class MessageController {
         @Param("email") email : string
     ){
         return await this.messageService.getMess(email)
+    }
+    @Post('sendmessage')
+    async sendMess(
+        @Body("participants") participants : [],
+        @Body("createdAt") createdAt : Date,
+        @Body("sentBy") sentBy : string,
+        @Body("sendTo") sendTo : string,
+        @Body("text") text : string,
+        @Body("type") type : string,
+    ){
+        return await this.messageService.sendMess(participants, createdAt, sentBy, sendTo, text, type)
     }
 }

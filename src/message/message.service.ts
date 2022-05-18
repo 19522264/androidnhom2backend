@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
@@ -12,7 +12,7 @@ export class MessageService {
                 }
             },
             orderBy:{
-                createAt: 'desc'
+                createdAt: 'desc'
             }
         })
         let result = []
@@ -43,10 +43,27 @@ export class MessageService {
                 }
             },
             orderBy: {
-                createAt: 'desc'
+                createdAt: 'desc'
             },
         })
         result.forEach(element => element['_id'] = element.id)
         return result
     }
+    async sendMess(participants : [], createdAt : Date, sentBy : string, sendTo : string, text : string, type : string){
+        const result = await this.prismaService.messages.create({
+            data:{
+                user: sentBy,
+                participants: participants,
+                createdAt: createdAt,
+                sendTo: sendTo,
+                sentBy: sentBy,
+                text: text,
+                type: type
+            }
+        })
+        if (result){
+            return "message sent"
+        }
+        else throw new BadRequestException("error")
+     }
 }

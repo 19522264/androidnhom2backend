@@ -233,7 +233,7 @@ export class UserService {
                         text: "Các bạn đang kết nối trên Exping",
                         system: true,
                         sentBy: "system",
-                        createAt: time
+                        createdAt: time
                     }
                 })
                 await this.prismaService.messages.create({
@@ -243,7 +243,7 @@ export class UserService {
                         text: "Các bạn đang kết nối trên Exping",
                         system: true,
                         sentBy: "system",
-                        createAt: time,
+                        createdAt: time,
                     }
                 })
                 return "OK"
