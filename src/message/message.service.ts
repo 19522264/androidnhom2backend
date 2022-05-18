@@ -55,8 +55,10 @@ export class MessageService {
             },
         })
         result.forEach((element)  => {
-                element['_id'] = element.docid
-                element['user'] = element.docid
+                element['_id'] = element.sentBy
+                element['user'] = {
+                    _id: element.sentBy
+                }
             }     
         )
         
@@ -65,7 +67,6 @@ export class MessageService {
     async sendMess(participants : [], createdAt : Date, sentBy : string, sendTo : string, text : string, type : string){
         const result = await this.prismaService.messages.create({
             data:{
-                user: sentBy,
                 participants: participants,
                 createdAt: createdAt,
                 sendTo: sendTo,
