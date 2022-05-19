@@ -1,4 +1,6 @@
-import { Body, Controller, Get, Header, Headers, Param, Post, UseGuards } from '@nestjs/common';
+import { UploadedFileMetadata } from '@nestjs/azure-storage';
+import { Body, Controller, Get, Header, Headers, Param, Post, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { get } from 'http';
 import { JwtGuard } from 'src/auth/guard';
 import { MessageService } from './message.service';
@@ -6,7 +8,9 @@ import { MessageService } from './message.service';
 @Controller('message')
 @UseGuards(JwtGuard)
 export class MessageController {
-    constructor(private readonly messageService: MessageService) {}
+    constructor(
+        private readonly messageService: MessageService,
+    ) {}
     @Get('lastmessages')
     async getMessages(
         @Headers("email") email : string
@@ -31,4 +35,5 @@ export class MessageController {
     ){
         return await this.messageService.sendMess(participants, createdAt, sentBy, sendTo, text, type)
     }
+    
 }

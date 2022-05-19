@@ -25,6 +25,7 @@
     "@azure/storage-blob": "^12.10.0",
     "@google-cloud/storage": "^5.19.4",
     "@nestjs-modules/mailer": "^1.6.1",
+    "@nestjs/azure-storage": "^3.0.0",
     "@nestjs/common": "^8.0.0",
     "@nestjs/config": "^2.0.0",
     "@nestjs/core": "^8.0.0",

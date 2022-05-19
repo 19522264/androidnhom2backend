@@ -4,11 +4,14 @@ import { UserService } from './user.service';
 import { Response } from 'express';
 import { JwtGuard } from 'src/auth/guard';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { AzureStorageFileInterceptor, AzureStorageService, UploadedFileMetadata } from '@nestjs/azure-storage';
 
 @Controller('user')
 @UseGuards(JwtGuard)
 export class UserController {
-    constructor(private readonly userService: UserService) {}
+    constructor(private readonly userService: UserService,
+                private readonly azureService: AzureStorageService
+        ) {}
     @Get(":email")
     async getUser(
         @Param("email") email : string,
@@ -180,5 +183,25 @@ export class UserController {
         @Param("email") email : string
     ){
         return await this.userService.getBarBadge(email)
+    }
+    @Post('avatar/upload')
+    @UseInterceptors(
+        AzureStorageFileInterceptor('file', null, {
+            containerName: 'avatar'
+        })
+    )
+    async UploadedFilesUsingInterceptor(
+        @UploadedFile()
+        file: UploadedFileMetadata,
+        @Headers("email") email : string
+    ){
+       file = {
+           ...file,
+           originalname: `${email}.png`,
+       }
+       const url = await this.azureService.upload(file, {
+           containerName: 'avatar'
+       })
+       return url
     }
 }
