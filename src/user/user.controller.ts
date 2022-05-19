@@ -191,16 +191,15 @@ export class UserController {
         })
     )
     async UploadedFilesUsingInterceptor(
-        @UploadedFile()
-        file: UploadedFileMetadata,
+        @UploadedFile() file : UploadedFileMetadata,
         @Headers("email") email : string
     ){
        file = {
            ...file,
-           originalname: `${email}.png`,
+           originalname: `${email}.jpg`,
        }
        const url = await this.azureService.upload(file, {
-           containerName: 'avatar'
+           containerName: 'avatar',
        })
        return url
     }
