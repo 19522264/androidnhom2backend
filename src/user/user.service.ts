@@ -355,4 +355,14 @@ export class UserService {
         if (result) return "success"
         return "fail"
     }
+    async RemoveAvatar(email: string){
+        const result = await this.prismaService.userprofile.update({
+            where:{
+                email: email
+            },
+            data: {
+                photoURL: 'none'
+            }
+        })
+    }
 }

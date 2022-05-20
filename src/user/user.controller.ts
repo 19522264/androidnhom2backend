@@ -211,4 +211,11 @@ export class UserController {
     {
         return await this.userService.updateUserURLavatar(email, url)
     }
+    @Post('avatar/remove')
+    async RemoveAvatar(
+        @Headers('email') email : string,
+    )
+    {
+        return await this.userService.RemoveAvatar(email)
+    }
 }
