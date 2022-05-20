@@ -112,4 +112,20 @@ export class MessageService {
         }
         else throw new BadRequestException("error")
      }
+    async sendImgMess(participants : [], createdAt : Date, sentBy : string, sendTo : string, url : string, type : string){
+        const result = await this.prismaService.messages.create({
+            data:{
+                participants: participants,
+                createdAt: createdAt,
+                sendTo: sendTo,
+                sentBy: sentBy,
+                image: url,
+                type: type
+            }
+        })
+        if (result){
+            return "image sent"
+        }
+        else throw new BadRequestException("error")
+    }
 }
