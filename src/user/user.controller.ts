@@ -196,7 +196,7 @@ export class UserController {
     ){
        file = {
            ...file,
-           originalname: `${email}.jpg`,
+           originalname: `${email + new Date()}.jpg`,
        }
        const url = await this.azureService.upload(file, {
            containerName: 'avatar',
