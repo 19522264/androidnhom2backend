@@ -44,13 +44,10 @@ export class MessageController {
     )
     async sendImgMess(
         @UploadedFile() file : UploadedFileMetadata,
-        @Body("participants") participants : [],
-        @Body("createdAt") createdAt : Date,
-        @Body("sentBy") sentBy : string,
-        @Body("sendTo") sendTo : string,
-        @Body("type") type : string,
+        @Body("data") data: string
     ){
-        const name = sentBy > sendTo ? sentBy + sendTo : sendTo + sentBy
+        const dataparsed = JSON.parse(data)
+        const name = dataparsed.sentBy > dataparsed.sendTo ? dataparsed.sentBy + dataparsed.sendTo : dataparsed.sendTo + dataparsed.sentBy
         file = {
             ...file,
             originalname: `${name + new Date()}.jpg`
@@ -58,6 +55,6 @@ export class MessageController {
         const url = await this.azureService.upload(file, {
             containerName: 'image'
         })
-        return await this.messageService.sendImgMess(participants, createdAt, sentBy, sendTo, url, type)
+        return await this.messageService.sendImgMess(dataparsed.participants, dataparsed.createdAt, dataparsed.sentBy, dataparsed.sendTo, url, dataparsed.type)
     }
 }
