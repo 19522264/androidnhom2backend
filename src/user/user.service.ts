@@ -343,4 +343,16 @@ export class UserService {
         }
         return result
     }
+    async updateUserURLavatar(email : string, url : string){
+        const result = await this.prismaService.userprofile.update({
+            where: {
+                email: email
+            },
+            data:{
+                photoURL: url
+            }
+        })
+        if (result) return "success"
+        return "fail"
+    }
 }

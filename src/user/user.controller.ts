@@ -203,4 +203,12 @@ export class UserController {
        })
        return url
     }
+    @Post('avatar/update')
+    async UpdateAvatarUrl(
+        @Headers('email') email : string,
+        @Body('url') url : string
+    )
+    {
+        return await this.userService.updateUserURLavatar(email, url)
+    }
 }
