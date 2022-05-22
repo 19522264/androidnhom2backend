@@ -78,4 +78,27 @@ export class MessageController {
         })
         return await this.messageService.sendvideomess(dataparsed.participants, dataparsed.createdAt, dataparsed.sentBy, dataparsed.sendTo, url, dataparsed.type)
     }
+    @Post('senddocmess')
+    @UseInterceptors(
+        AzureStorageFileInterceptor('file', null, {
+            containerName: 'attachment'
+        })
+    )
+    async sendDocMess(
+        @UploadedFile() file : UploadedFileMetadata,
+        @Body("data") data: string
+    ){
+        console.log(file)
+        const dataparsed = JSON.parse(data)
+        const name = dataparsed.sentBy > dataparsed.sendTo ? dataparsed.sentBy + dataparsed.sendTo : dataparsed.sendTo + dataparsed.sentBy
+        file = {
+            ...file,
+            originalname: `${dataparsed.attachmentname + new Date()}`
+        }
+        const url = await this.azureService.upload(file, {
+            containerName: 'attachment',
+        })
+        return await this.messageService.sendDocMess(dataparsed.participants, dataparsed.createdAt, dataparsed.sentBy, dataparsed.sendTo, url, dataparsed.type, dataparsed.attachmentname)
+
+    }
 }

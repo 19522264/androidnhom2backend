@@ -144,4 +144,21 @@ export class MessageService {
         }
         else throw new BadRequestException("error")
     }
+    async sendDocMess(participants : [], createdAt : Date, sentBy : string, sendTo : string, url : string, type : string, attachmentname: string) {
+        const result = await this.prismaService.messages.create({
+            data:{
+                participants: participants,
+                createdAt: createdAt,
+                sendTo: sendTo,
+                sentBy: sentBy,
+                attachmentid: url,
+                attachmentname: attachmentname,
+                type: type
+            }
+        })
+        if (result){
+            return "attachemnt sent"
+        }
+        else return "Fail"
+    }
 }
