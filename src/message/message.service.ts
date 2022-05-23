@@ -178,4 +178,20 @@ export class MessageService {
         }
         else return "Fail"
     }
+    async sendgifMess(participants : [], createdAt : Date, sentBy : string, sendTo : string, gif : string, type : string){
+        const result = await this.prismaService.messages.create({
+            data:{
+                participants: participants,
+                createdAt: createdAt,
+                sendTo: sendTo,
+                sentBy: sentBy,
+                gif: gif,
+                type: type
+            }
+        })
+        if (result){
+            return "gifted sent"
+        }
+        else throw new BadRequestException("error")
+    }
 }

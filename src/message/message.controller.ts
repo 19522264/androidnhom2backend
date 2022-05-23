@@ -122,4 +122,15 @@ export class MessageController {
         })
         return await this.messageService.sendAudioMess(dataparsed.participants, dataparsed.createdAt, dataparsed.sentBy, dataparsed.sendTo, url, dataparsed.type)
     }
+    @Post('sendgifmessage')
+    async sendGifMess(
+        @Body("participants") participants : [],
+        @Body("createdAt") createdAt : Date,
+        @Body("sentBy") sentBy : string,
+        @Body("sendTo") sendTo : string,
+        @Body("gif") gif : string,
+        @Body("type") type : string,
+    ){
+        return await this.messageService.sendgifMess(participants, createdAt, sentBy, sendTo, gif, type)
+    }
 }
