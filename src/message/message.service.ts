@@ -161,4 +161,21 @@ export class MessageService {
         }
         else return "Fail"
     }
+    async sendAudioMess(participants : [], createdAt : Date, sentBy : string, sendTo : string, url : string, type : string){
+        const result = await this.prismaService.messages.create({
+            data:{
+                participants: participants,
+                createdAt: createdAt,
+                sendTo: sendTo,
+                sentBy: sentBy,
+                audio: url,
+                type: type,
+                text: ''
+            }
+        })
+        if (result){
+            return "audio sent"
+        }
+        else return "Fail"
+    }
 }

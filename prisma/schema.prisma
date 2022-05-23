@@ -69,6 +69,7 @@ model messages {
   sendTo String?
   image String?
   video String?
+  audio String?
   gif String?
   type String?
   text String?
