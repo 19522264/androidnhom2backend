@@ -140,4 +140,18 @@ export class MessageController {
     ){
         return await this.messageService.getImgMess(email, fremail)
     }
+    @Get('getvideolist/:email/:fremail')
+    async getVidList(
+        @Param("email") email : string,
+        @Param("fremail") fremail : string,
+    ){
+        return await this.messageService.getVidMess(email, fremail)
+    }
+    @Get('getdoclist/:email/:fremail')
+    async getDocList(
+        @Param("email") email : string,
+        @Param("fremail") fremail : string,
+    ){
+        return await this.messageService.getDocMess(email, fremail)
+    }
 }

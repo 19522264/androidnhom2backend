@@ -225,4 +225,67 @@ export class MessageService {
         }
         return [];
     }
+    async getVidMess(email: string, fremail: string){
+        const res = await this.prismaService.messages.findMany({
+            where: {
+                AND: [
+                    {
+                        participants: {
+                            has: email
+                        }
+                    },
+                    {
+                        participants:{
+                            has: fremail
+                        }
+                    },
+                    {
+                        type: "video"
+                    }
+                ]
+            },
+            orderBy: {
+                createdAt: 'desc'
+            },
+            select: {
+                video: true
+            }
+        })
+        if (res) {
+            return res
+        }
+        return [];
+    }
+    async getDocMess(email: string, fremail: string){
+        const res = await this.prismaService.messages.findMany({
+            where: {
+                AND: [
+                    {
+                        participants: {
+                            has: email
+                        }
+                    },
+                    {
+                        participants:{
+                            has: fremail
+                        }
+                    },
+                    {
+                        type: "document"
+                    }
+                ]
+            },
+            orderBy: {
+                createdAt: 'desc'
+            },
+            select: {
+                attachmentid: true,
+                attachmentname: true
+            }
+        })
+        if (res) {
+            return res
+        }
+        return [];
+    }
 }
