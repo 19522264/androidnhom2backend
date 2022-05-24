@@ -194,4 +194,35 @@ export class MessageService {
         }
         else throw new BadRequestException("error")
     }
+    async getImgMess(email: string, fremail: string){
+        const res = await this.prismaService.messages.findMany({
+            where: {
+                AND: [
+                    {
+                        participants: {
+                            has: email
+                        }
+                    },
+                    {
+                        participants:{
+                            has: fremail
+                        }
+                    },
+                    {
+                        type: "image"
+                    }
+                ]
+            },
+            orderBy: {
+                createdAt: 'desc'
+            },
+            select: {
+                image: true
+            }
+        })
+        if (res) {
+            return res
+        }
+        return [];
+    }
 }

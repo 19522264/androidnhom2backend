@@ -133,4 +133,11 @@ export class MessageController {
     ){
         return await this.messageService.sendgifMess(participants, createdAt, sentBy, sendTo, gif, type)
     }
+    @Get('getimagelist/:email/:fremail')
+    async getImgList(
+        @Param("email") email : string,
+        @Param("fremail") fremail : string,
+    ){
+        return await this.messageService.getImgMess(email, fremail)
+    }
 }
