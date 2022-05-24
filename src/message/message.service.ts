@@ -31,7 +31,8 @@ export class MessageService {
             result.push({
                 ...index,
                 partnerPhotoURL: res.photoURL,
-                partnerName: res.displayName
+                partnerName: res.displayName,
+                partnerEmail: fremail
             })
         }
         return result
