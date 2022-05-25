@@ -7,6 +7,7 @@ export class GroupService {
     
     async createGroupInfo(data : string, url : string) {
         const parsed = JSON.parse(data)
+        parsed.participants.push(parsed.email)
         const arr = parsed.participants.sort().reverse()
         const result = await this.prismaService.groupinfo.create({
             data: {
