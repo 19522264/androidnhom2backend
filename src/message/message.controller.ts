@@ -88,7 +88,7 @@ export class MessageController {
         @UploadedFile() file : UploadedFileMetadata,
         @Body("data") data: string
     ){
-        console.log(file)
+        //console.log(file)
         const dataparsed = JSON.parse(data)
         const name = dataparsed.sentBy > dataparsed.sendTo ? dataparsed.sentBy + dataparsed.sendTo : dataparsed.sendTo + dataparsed.sentBy
         file = {

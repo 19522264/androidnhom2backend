@@ -13,14 +13,17 @@ import { MessageModule } from './message/message.module';
 import { MessageService } from './message/message.service';
 import { MailController } from './mail/mail.controller';
 import { MailModule } from './mail/mail.module';
+import { GroupModule } from './group/group.module';
+import { GroupController } from './group/group.controller';
+import { GroupService } from './group/group.service';
 
 @Global()
 @Module({
   imports: [UserModule, PrismaModule,  
      ConfigModule.forRoot({
     isGlobal: true,
-  }), AuthModule, MessageModule, MailModule],
-  controllers: [AppController, UserController, MessageController, MailController],
-  providers: [AppService, UserService, GcloudservicesService, MessageService],
+  }), AuthModule, MessageModule, MailModule, GroupModule],
+  controllers: [AppController, UserController, MessageController, MailController, GroupController],
+  providers: [AppService, UserService, GcloudservicesService, MessageService, GroupService],
 })
 export class AppModule {}

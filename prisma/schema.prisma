@@ -76,6 +76,27 @@ model messages {
   attachmentid String?
   attachmentname String?
 }
+model groupinfo {
+  docid String @id @default(auto()) @map("_id") @db.ObjectId
+  groupname String
+  photoURL String
+  participants String[]
+}
+model groupmessages {
+  docid String @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime @default(now())
+  system Boolean @default(false)
+  groupid String
+  sentBy String?
+  image String?
+  video String?
+  audio String?
+  gif String?
+  type String?
+  text String?
+  attachmentid String?
+  attachmentname String?
+}
 model school{
   docid String @id @default(auto()) @map("_id") @db.ObjectId
   label String
