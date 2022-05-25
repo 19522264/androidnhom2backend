@@ -1,5 +1,5 @@
 import { AzureStorageFileInterceptor, AzureStorageService, UploadedFileMetadata } from '@nestjs/azure-storage';
-import { Body, Controller, Get, Post, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { nanoid } from 'nanoid';
 import { JwtGuard } from 'src/auth/guard';
 import { GroupService } from './group.service';
@@ -32,5 +32,11 @@ export class GroupController {
             })
         }
         return await this.groupService.createGroupInfo(data, url)
+    }
+    @Get('getallmess/:email')
+    async getAllMess(
+        @Param('email') email : string
+    ){
+        return await this.groupService.getAllMess(email)
     }
 }

@@ -38,4 +38,43 @@ export class GroupService {
         }
         return "fail"
     }
+    async getAllMess(email : string){
+        const result = await this.prismaService.groupinfo.findMany({
+            where:{ 
+                participants : {
+                    has: email
+                }
+            }
+        })
+        let messages = []
+        if (result.length > 0) {
+            for(const index of result){
+                const mess = await this.prismaService.groupmessages.findFirst({
+                    where:{
+                        groupid: index.docid
+                    },
+                    orderBy: {
+                        createdAt: 'desc'
+                    }
+                })
+                let sender = {
+                    displayName: "system"
+                }
+                if (mess && !mess.system){
+                    sender = await this.prismaService.userprofile.findUnique({
+                        where: {
+                            email: mess.sentBy
+                        }
+                    })
+                } 
+                console.log(sender)
+                messages.push({
+                    ...mess,
+                    ...sender
+                })
+                
+            }
+        }
+        return messages
+    }
 }
