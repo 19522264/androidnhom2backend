@@ -54,4 +54,26 @@ export class GroupController {
     ){
         return await this.groupService.sendGroupTextMss(groupid, sentBy, createdAt, text)
     }
+    @Post('sendimgmess')
+    @UseInterceptors(
+        AzureStorageFileInterceptor('image', null, {
+            containerName: 'image'
+        })
+    )
+    async sendImgMess(
+        @UploadedFile() file : UploadedFileMetadata,
+        @Body('data') data : string
+    ){
+        let url = "none"
+        if (file) {
+            file = {
+                ...file,
+                originalname: `group${nanoid()}.jpg`
+            }
+            url = await this.azureService.upload(file, {
+                containerName: 'image'
+            })
+        }
+        return await this.groupService.sendImgMess(data, url)
+    }
 }

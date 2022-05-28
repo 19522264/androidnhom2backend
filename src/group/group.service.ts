@@ -139,4 +139,20 @@ export class GroupService {
         }
         return "fail"
     }
+    async sendImgMess(data : string, url : string){
+        const parsed = JSON.parse(data)
+        const result = await this.prismaService.groupmessages.create({
+            data: {
+                groupid: parsed.groupid,
+                sentBy: parsed.sentBy,
+                image: url,
+                createdAt: parsed.createdAt,
+                type: 'image'
+            }
+        })
+        if (result) {
+            return "image sent"
+        }
+        return "fail"
+    }
 }
