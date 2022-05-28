@@ -104,12 +104,20 @@ export class GroupService {
                     })
                     mess.push({
                         ...index,
-                        sender
+                        sender,
+                        _id: index.docid,
+                        user:  {
+                            _id: index.sentBy
+                        }
                     })
                 }
                 else {
                     mess.push({
                         ...index,
+                        _id: index.docid,
+                        user:  {
+                            _id: index.sentBy
+                        }
                     })
                 }
             }
