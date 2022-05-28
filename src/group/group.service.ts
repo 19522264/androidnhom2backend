@@ -155,4 +155,20 @@ export class GroupService {
         }
         return "fail"
     }
+    async sendvidMess(data : string, url : string){
+        const parsed = JSON.parse(data)
+        const result = await this.prismaService.groupmessages.create({
+            data: {
+                groupid: parsed.groupid,
+                sentBy: parsed.sentBy,
+                video: url,
+                createdAt: parsed.createdAt,
+                type: 'video'
+            }
+        })
+        if (result) {
+            return "video sent"
+        }
+        return "fail"
+    }
 }

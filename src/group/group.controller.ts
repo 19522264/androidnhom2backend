@@ -56,7 +56,7 @@ export class GroupController {
     }
     @Post('sendimgmess')
     @UseInterceptors(
-        AzureStorageFileInterceptor('image', null, {
+        AzureStorageFileInterceptor('file', null, {
             containerName: 'image'
         })
     )
@@ -75,5 +75,28 @@ export class GroupController {
             })
         }
         return await this.groupService.sendImgMess(data, url)
+    }
+    
+    @Post('sendvidmess')
+    @UseInterceptors(
+        AzureStorageFileInterceptor('file', null, {
+            containerName: 'videos'
+        })
+    )
+    async sendVidMess(
+        @UploadedFile() file : UploadedFileMetadata,
+        @Body('data') data : string
+    ){
+        let url = "none"
+        if (file) {
+            file = {
+                ...file,
+                originalname: `group${nanoid()}.jpg`
+            }
+            url = await this.azureService.upload(file, {
+                containerName: 'videos'
+            })
+        }
+        return await this.groupService.sendvidMess(data, url)
     }
 }
