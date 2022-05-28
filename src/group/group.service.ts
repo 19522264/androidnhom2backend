@@ -86,15 +86,15 @@ export class GroupService {
     }
     async getAllMessages(docid : string){
         const result = await this.prismaService.groupmessages.findMany({
-            where:{
-                docid: docid
+            where: {
+                groupid: docid
             },
-            orderBy:{
+            orderBy: {
                 createdAt: 'desc'
             }
         })
         let mess = []
-        if (result.length > 0) {
+        if (result) {
             for(const index of result){
                 if (index.sentBy){
                     const sender = await this.prismaService.userprofile.findFirst({
@@ -114,7 +114,7 @@ export class GroupService {
                 }
             }
         }
-        return mess;
+        return mess
     }
     async sendGroupTextMss(groupid : string, sentBy : string, createdAt : Date, text : string){
         const result =  await this.prismaService.groupmessages.create({
