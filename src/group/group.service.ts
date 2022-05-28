@@ -69,8 +69,15 @@ export class GroupService {
                 } 
                 console.log(sender)
                 messages.push({
-                    ...mess,
-                    ...sender
+                    groupinfo: {
+                        ...index,
+                    },
+                    message: {
+                        ...mess,
+                    },
+                    sender:{
+                        ...sender
+                    }
                 })
                 
             }
