@@ -82,6 +82,6 @@ export class GroupService {
                 
             }
         }
-        return messages
+        return messages.sort((a,b) => (a.message.createdAt > b.message.createdAt) ? -1 : ((b.message.createdAt > a.message.createdAt) ? 1 : 0))
     }
 }
