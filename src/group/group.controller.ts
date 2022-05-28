@@ -39,4 +39,19 @@ export class GroupController {
     ){
         return await this.groupService.getAllMess(email)
     }
+    @Get('getmessages/:groupid')
+    async getMessages(
+        @Param('groupid') groupid : string
+    ){
+        return await this.groupService.getAllMessages(groupid)
+    }
+    @Post('sendgroupmess')
+    async sendGroupMess(
+        @Body('groupid') groupid : string,
+        @Body('sentBy') sentBy : string,
+        @Body('createdAt') createdAt : Date,
+        @Body('text') text : string,
+    ){
+        return await this.groupService.sendGroupTextMss(groupid, sentBy, createdAt, text)
+    }
 }

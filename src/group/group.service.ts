@@ -55,7 +55,7 @@ export class GroupService {
                     },
                     orderBy: {
                         createdAt: 'desc'
-                    }
+                    },
                 })
                 let sender = {
                     displayName: "system"
@@ -83,5 +83,52 @@ export class GroupService {
             }
         }
         return messages.sort((a,b) => (a.message.createdAt > b.message.createdAt) ? -1 : ((b.message.createdAt > a.message.createdAt) ? 1 : 0))
+    }
+    async getAllMessages(docid : string){
+        const result = await this.prismaService.groupmessages.findMany({
+            where:{
+                docid: docid
+            },
+            orderBy:{
+                createdAt: 'desc'
+            }
+        })
+        let mess = []
+        if (result.length > 0) {
+            for(const index of result){
+                if (index.sentBy){
+                    const sender = await this.prismaService.userprofile.findFirst({
+                        where: {
+                            email: index.sentBy
+                        }
+                    })
+                    mess.push({
+                        ...index,
+                        sender
+                    })
+                }
+                else {
+                    mess.push({
+                        ...index,
+                    })
+                }
+            }
+        }
+        return mess;
+    }
+    async sendGroupTextMss(groupid : string, sentBy : string, createdAt : Date, text : string){
+        const result =  await this.prismaService.groupmessages.create({
+            data:{
+                groupid: groupid,
+                sentBy: sentBy,
+                createdAt: createdAt,
+                text: text,
+                type: 'text'
+            }
+        })
+        if (result) {
+            return "sent"
+        }
+        return "fail"
     }
 }
