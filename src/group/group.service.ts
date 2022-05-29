@@ -171,4 +171,21 @@ export class GroupService {
         }
         return "fail"
     }
+    async sendDocMess(data : string, url : string){
+        const parsed = JSON.parse(data)
+        const result = await this.prismaService.groupmessages.create({
+            data:{
+                groupid: parsed.groupid,
+                sentBy: parsed.sentBy,
+                attachmentid: url,
+                attachmentname: parsed.attachmentname,
+                createdAt: parsed.createdAt,
+                type: 'document'
+            }
+        })
+        if (result) {
+            return "doc sent"
+        }
+        return "fail"
+    }
 }

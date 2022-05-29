@@ -99,4 +99,24 @@ export class GroupController {
         }
         return await this.groupService.sendvidMess(data, url)
     }
+    @Post('senddocmess')
+    @UseInterceptors(
+        AzureStorageFileInterceptor('file', null, {
+            containerName: 'attachment'
+        })
+    )
+    async sendDocMess(
+        @UploadedFile() file : UploadedFileMetadata,
+        @Body("data") data: string
+    ){
+
+        file = {
+            ...file,
+            originalname: `group${nanoid()}`
+        }
+        const url = await this.azureService.upload(file, {
+            containerName: 'attachment',
+        })
+        return await this.groupService.sendDocMess(data, url)
+    }
 }
