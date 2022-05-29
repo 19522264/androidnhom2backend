@@ -188,4 +188,20 @@ export class GroupService {
         }
         return "fail"
     }
+    async sendAudioMess(data: string, url : string){
+        const parsed = JSON.parse(data)
+        const result = await this.prismaService.groupmessages.create({
+            data:{
+                groupid: parsed.groupid,
+                sentBy: parsed.sentBy,
+                audio: url,
+                createdAt: parsed.createdAt,
+                type: 'audio'
+            }
+        })
+        if (result) {
+            return "audio sent"
+        }
+        return "fail"
+    }
 }

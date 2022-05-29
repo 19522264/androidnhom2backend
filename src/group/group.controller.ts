@@ -119,4 +119,24 @@ export class GroupController {
         })
         return await this.groupService.sendDocMess(data, url)
     }
+    @Post('sendaudiomess')
+    @UseInterceptors(
+        AzureStorageFileInterceptor('file', null, {
+            containerName: 'audio'
+        })
+    )
+    async sendaudioMess(
+        @UploadedFile() file : UploadedFileMetadata,
+        @Body("data") data: string
+    ){
+        
+        file = {
+            ...file,
+            originalname: `group${nanoid()}`
+        }
+        const url = await this.azureService.upload(file, {
+            containerName: 'audio',
+        })
+        return await this.groupService.sendAudioMess(data, url)
+    }
 }
