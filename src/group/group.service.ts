@@ -13,7 +13,8 @@ export class GroupService {
             data: {
                 photoURL: url,
                 participants: parsed.participants,
-                groupname: parsed.displayName
+                groupname: parsed.displayName,
+                admins: parsed.email
             }
         })
 

@@ -81,6 +81,7 @@ model groupinfo {
   groupname String
   photoURL String
   participants String[]
+  admins String[]
 }
 model groupmessages {
   docid String @id @default(auto()) @map("_id") @db.ObjectId
