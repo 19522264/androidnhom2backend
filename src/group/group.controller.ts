@@ -139,4 +139,14 @@ export class GroupController {
         })
         return await this.groupService.sendAudioMess(data, url)
     }
+    @Post('sendgifmessage')
+    async sendGifMess(
+        @Body("groupid") groupid : string,
+        @Body("createdAt") createdAt : Date,
+        @Body("sentBy") sentBy : string,
+        @Body("gif") gif : string,
+    ){
+        return await this.groupService.sendgifMess(groupid, createdAt, sentBy, gif)
+    }
+   
 }

@@ -204,4 +204,19 @@ export class GroupService {
         }
         return "fail"
     }
+    async sendgifMess(groupid : string, createdAt : Date, sentBy : string, gif : string){
+        const result = await this.prismaService.groupmessages.create({
+            data:{ 
+                groupid: groupid,
+                createdAt: createdAt,
+                sentBy: sentBy,
+                gif: gif,
+                type: 'gif'
+            }
+        })
+        if (result) {
+            return "gif sent"
+        }
+        return "fail"
+    }
 }
