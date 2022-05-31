@@ -63,7 +63,7 @@ export class AuthService {
             throw new BadRequestException('user not existed')
         }
         try{
-            const token = Math.floor(110000 + Math.random() * 890000).toString();
+            const token = Math.floor(0 + Math.random() * 999999).toString();
             const result =  await this.prismaService.waitingtoken.create({
                 data: {
                     token: token,
@@ -110,9 +110,9 @@ export class AuthService {
             const space = user.createdAt.getTime() - new Date().getTime()
             let abs = Math.abs(space)
             var minutes = Math.floor(abs / 60000);
-            const deleted = await this.prismaService.waitingtoken.delete({
+            const deleted = await this.prismaService.waitingtoken.deleteMany({
                 where : {
-                    docid: user.docid
+                    email: user.email
                 }
             })
             if (minutes > 15) {
