@@ -251,4 +251,39 @@ export class GroupService {
         if (images) return images
         return []
     }
+    async getVidList(groupid : string){
+        const videos = this.prismaService.groupmessages.findMany({
+            where: {
+                groupid: groupid,
+                type: 'video'
+            },
+            orderBy: {
+                createdAt: 'desc'
+            },
+            select: {
+                video: true,
+                createdAt: true
+            }
+        })        
+        if (videos) return videos
+        return []
+    }
+    async getDocList(groupid : string){
+        const docs = this.prismaService.groupmessages.findMany({
+            where: {
+                groupid: groupid,
+                type: 'document'
+            },
+            orderBy: {
+                createdAt: 'desc'
+            },
+            select: {
+                attachmentid: true,
+                attachmentname: true,
+                createdAt: true
+            }
+        })        
+        if (docs) return docs
+        return []
+    }
 }

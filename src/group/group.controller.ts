@@ -160,4 +160,16 @@ export class GroupController {
     ){
         return await this.groupService.getImageList(groupid)
     }
+    @Get('getvideolist/:groupid')
+    async getVidList(
+        @Param('groupid') groupid : string
+    ){
+        return await this.groupService.getVidList(groupid)
+    }
+    @Get('getdoclist/:groupid')
+    async getDoceList(
+        @Param('groupid') groupid : string
+    ){
+        return await this.groupService.getDocList(groupid)
+    }
 }
