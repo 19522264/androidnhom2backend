@@ -220,18 +220,20 @@ export class GroupService {
         }
         return "fail"
     }
-    async getListMember(list : string){
+    async getListMember(list : string, email: string){
         const parsed = JSON.parse(list)
         console.log(parsed)
         let users = []
         for (const index of parsed){
             const user = await this.prismaService.userprofile.findUnique({
                 where: {
-                    email: index
+                    email: index,
                 }
             })
             users.push(user)
         }
+        const pos = users.indexOf(email)
+        users.splice(pos)
         return users
     }
     async getImageList(groupid : string){
