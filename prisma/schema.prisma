@@ -108,3 +108,15 @@ model city{
   label String
   value String
 }
+model waitingtoken {
+  docid String @id @default(auto()) @map("_id") @db.ObjectId
+  token String
+  email String
+  createdAt DateTime @default(now())
+}
+model expiredtoken {
+  docid String @id @default(auto()) @map("_id") @db.ObjectId
+  token String
+  email String
+  createdAt DateTime @default(now())
+}

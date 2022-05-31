@@ -64,4 +64,25 @@ export class AuthController {
         if (user.confirm !== "confirmed") return "not confirmed"
         return user.confirm
     }
+    @Post('forgotpass')
+    async forgotPassword(
+        @Body('email') email : string
+    ){
+        return await this.authService.resetPasswordEmail(email)
+    }
+    @Post('checkotp')
+    async checkotp(
+        @Body('otp') opt : string,
+        @Body('email') email : string
+    ){
+        return await this.authService.checkOtp(opt, email)
+    }
+    @Post('resetpassword')
+    async resetPassword(
+        @Body('email') email : string,
+        @Body('password') password : string
+    ){
+        const hashedPassword =  bcrypt.hashSync(password, 12);
+        return await this.authService.resetPassword(email, hashedPassword)
+    }
 }
