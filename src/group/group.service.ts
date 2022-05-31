@@ -234,4 +234,21 @@ export class GroupService {
         }
         return users
     }
+    async getImageList(groupid : string){
+        const images = this.prismaService.groupmessages.findMany({
+            where: {
+                groupid: groupid,
+                type: 'image'
+            },
+            orderBy: {
+                createdAt: 'desc'
+            },
+            select: {
+                image: true,
+                createdAt: true
+            }
+        })        
+        if (images) return images
+        return []
+    }
 }

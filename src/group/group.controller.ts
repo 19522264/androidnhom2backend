@@ -154,4 +154,10 @@ export class GroupController {
     ) {
         return await this.groupService.getListMember(list)
     }
+    @Get('getimagelist/:groupid')
+    async getImageList(
+        @Param('groupid') groupid : string
+    ){
+        return await this.groupService.getImageList(groupid)
+    }
 }
