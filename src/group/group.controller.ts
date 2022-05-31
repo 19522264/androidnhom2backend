@@ -148,11 +148,12 @@ export class GroupController {
     ){
         return await this.groupService.sendgifMess(groupid, createdAt, sentBy, gif)
     }
-    @Get('getlistmember/:list')
+    @Get('getlistmember/:email/:list')
     async getListMember(
-        @Param('list') list : string
+        @Param('list') list : string,
+        @Param('email') email : string
     ) {
-        return await this.groupService.getListMember(list)
+        return await this.groupService.getListMember(list, email)
     }
     @Get('getimagelist/:groupid')
     async getImageList(
