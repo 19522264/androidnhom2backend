@@ -63,7 +63,7 @@ export class AuthService {
             throw new BadRequestException('user not existed')
         }
         try{
-            const token = Math.floor(100000 + Math.random() * 999999).toString();
+            const token = Math.floor(110000 + Math.random() * 890000).toString();
             const result =  await this.prismaService.waitingtoken.create({
                 data: {
                     token: token,
