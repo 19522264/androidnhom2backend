@@ -533,8 +533,10 @@ export class GroupService {
                         email: index
                     }
                 })
+                users.push(user)
             }
         }
+        users.shift()
         return users
     }
 }
