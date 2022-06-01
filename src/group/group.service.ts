@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { nanoid } from 'nanoid';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
@@ -14,7 +15,8 @@ export class GroupService {
                 photoURL: url,
                 participants: parsed.participants,
                 groupname: parsed.displayName,
-                admins: parsed.email
+                admins: parsed.email,
+                waitingforaccept: [`${nanoid()}`]
             }
         })
 
