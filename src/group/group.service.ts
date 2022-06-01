@@ -328,7 +328,7 @@ export class GroupService {
         })
         let arr = []
         for (const index of result.participants){
-            if (index !== email) {
+            if (index != email) {
                 arr.push(index)
             }
         }
@@ -340,6 +340,7 @@ export class GroupService {
                 participants: arr
             }
         })
+        console.log(updated)
         if (updated) {
             const user = await this.prismaService.userprofile.findUnique({
                 where: {
@@ -372,7 +373,7 @@ export class GroupService {
         })
         let arr = []
         for (const index of result.participants){
-            if (index !== email) {
+            if (index != email) {
                 arr.push(index)
             }
         }
