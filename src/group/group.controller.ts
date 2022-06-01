@@ -210,4 +210,10 @@ export class GroupController {
     ){
         return await this.groupService.getWaitting(groupid)
     }
+    @Post('deletegroup')
+    async deletegroup(
+        @Body('groupid') groupid : string,
+    ){
+        return await this.groupService.deletegroup(groupid)
+    }
 }

@@ -533,10 +533,20 @@ export class GroupService {
                         email: index
                     }
                 })
+                console.log(user)
                 users.push(user)
             }
         }
         users.shift()
         return users
+    }
+    async deletegroup(groupid){
+        const result =  await this.prismaService.groupinfo.delete({
+            where: {
+                docid: groupid
+            }
+        })
+        if (result) return "ok"
+        return "fail"
     }
 }
