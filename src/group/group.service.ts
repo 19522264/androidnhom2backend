@@ -326,9 +326,10 @@ export class GroupService {
                 docid: groupid
             }
         })
-        const arr = result.participants.filter((e : string) => {
-            return  result.participants.indexOf(email) === -1;
-        })
+        const pos = result.participants.indexOf(email)
+        console.log(pos)
+        const arr = result.participants.slice(0, pos)
+        console.log(arr)
         const updated = await this.prismaService.groupinfo.update({
             where: {
                 docid: groupid
