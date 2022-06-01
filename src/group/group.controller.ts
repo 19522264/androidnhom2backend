@@ -183,11 +183,16 @@ export class GroupController {
     @Post('removemember')
     async removeMember(
         @Body('email') email : string,
-        @Body('name') name : string,
         @Body('groupid') groupid : string,
-        @Body('type') type : boolean,
         @Body('remover') remover : string
     ){
-        return await this.groupService.removeMember(email, name, groupid, type, remover)
+        return await this.groupService.removeMember(email, groupid,  remover)
+    }
+    @Post('outgroup')
+    async outgroup(
+        @Body('email') email : string,
+        @Body('groupid') groupid : string,
+    ){
+        return await this.groupService.outgroup(email, groupid)
     }
 }
