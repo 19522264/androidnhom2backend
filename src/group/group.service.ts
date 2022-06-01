@@ -326,10 +326,12 @@ export class GroupService {
                 docid: groupid
             }
         })
-        const pos = result.participants.indexOf(email)
-        console.log(pos)
-        const arr = result.participants.slice(0, pos)
-        console.log(arr)
+        let arr = []
+        for (const index of result.participants){
+            if (index !== email) {
+                arr.push(index)
+            }
+        }
         const updated = await this.prismaService.groupinfo.update({
             where: {
                 docid: groupid
@@ -368,10 +370,12 @@ export class GroupService {
                 docid: groupid
             }
         })
-        const pos = result.participants.indexOf(email)
-        console.log(pos)
-        const arr = result.participants.slice(0, pos)
-        console.log(arr)
+        let arr = []
+        for (const index of result.participants){
+            if (index !== email) {
+                arr.push(index)
+            }
+        }
         const updated = await this.prismaService.groupinfo.update({
             where: {
                 docid: groupid
