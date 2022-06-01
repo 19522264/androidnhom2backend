@@ -195,4 +195,12 @@ export class GroupController {
     ){
         return await this.groupService.outgroup(email, groupid)
     }
+    @Post("addtogroup")
+    async addtogroup (
+        @Body('email') email : string,
+        @Body('groupid') groupid : string,
+        @Body('admin') admin : boolean
+    ){
+        return await this.groupService.addtogroup(email, groupid, admin)
+    }
 }

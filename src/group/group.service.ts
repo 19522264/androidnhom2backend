@@ -360,7 +360,26 @@ export class GroupService {
                     text:  `${user.displayName} đã xóa ${user2.displayName} ra khỏi nhóm`
                 }
             })
-            if (result2) return "removed"
+            
+            if (result2) {
+                const group = await this.prismaService.groupinfo.findUnique({
+                    where: {
+                        docid: groupid
+                    },
+                    select: {
+                        participants: true
+                    }
+                })
+                if (group.participants.length <= 2){
+                    const deleted = await this.prismaService.groupinfo.delete({
+                        where: {
+                            docid: groupid
+                        }
+                    })
+                    return "removed"
+                }
+                return "removed"
+            }
             return "fail"
         }
         return "fail"
@@ -399,8 +418,55 @@ export class GroupService {
                     text:  `${user2.displayName} đã rời khỏi nhóm`
                 }
             })
-            if (result2) return "removed"
+            if (result2) {
+                const group = await this.prismaService.groupinfo.findUnique({
+                    where: {
+                        docid: groupid
+                    },
+                    select: {
+                        participants: true
+                    }
+                })
+                if (group.participants.length <= 2){
+                    const deleted = await this.prismaService.groupinfo.delete({
+                        where: {
+                            docid: groupid
+                        }
+                    })
+                    return "removed"
+                }
+                return "removed"
+            }
             return "fail"
+        }
+        return "fail"
+    }
+    async addtogroup(email :string, groupid: string, admin : boolean){
+        if (admin) {
+            const result = await this.prismaService.groupinfo.update({
+                where:{
+                    docid: groupid,
+                },
+                data: {
+                    participants: {
+                        push: email
+                    }
+                }
+            })
+            if (result) return "addtogroup"
+        }
+        else {
+            const result = await this.prismaService.groupinfo.update({
+                where:{
+                    docid: groupid,
+                },
+                data: {
+                    waitingforaccept: {
+                        push: email
+                    }
+                }
+            })
+            if (result) return "addtoqueue"
         }
         return "fail"
     }
