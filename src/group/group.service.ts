@@ -68,7 +68,7 @@ export class GroupService {
                         }
                     })
                 } 
-                console.log(sender)
+                //console.log(sender)
                 messages.push({
                     groupinfo: {
                         ...index,
@@ -222,7 +222,7 @@ export class GroupService {
     }
     async getListMember(list : string, email: string){
         const parsed = JSON.parse(list)
-        console.log(parsed)
+       // console.log(parsed)
         let users = []
         for (const index of parsed){
             const user = await this.prismaService.userprofile.findUnique({
@@ -306,7 +306,7 @@ export class GroupService {
                     participants: true
                 }
             })
-            console.log(friends)
+            //console.log(friends)
             if (friends) {
                 arr = friends.listfriends.filter((e : string) => {
                     return parsed.indexOf(e) === -1;
@@ -356,7 +356,7 @@ export class GroupService {
                 participants: arr
             }
         })
-        console.log(updated)
+        //console.log(updated)
         if (updated) {
             const user = await this.prismaService.userprofile.findUnique({
                 where: {
