@@ -230,11 +230,10 @@ export class GroupService {
                     email: index,
                 }
             })
-            users.push(user)
+            if (user.email !== email) {
+                users.push(user)
+            }
         }
-        const pos = users.indexOf(email)
-        console.log(pos)
-        users.splice(0, pos)
         return users
     }
     async getImageList(groupid : string){
@@ -312,14 +311,12 @@ export class GroupService {
                             email: index
                         }
                     })
-                    if (user) {
+                    if (user.email !== email) {
                         users.push(user)
                     }
                 }
             }
-            const pos = users.indexOf(email)
-            console.log(pos)
-            return users.slice(0, pos)
+            return users
         }
         return []
     }
