@@ -75,6 +75,7 @@ model messages {
   text String?
   attachmentid String?
   attachmentname String?
+  seen String[]
 }
 model groupinfo {
   docid String @id @default(auto()) @map("_id") @db.ObjectId
@@ -82,6 +83,7 @@ model groupinfo {
   photoURL String
   participants String[]
   admins String[]
+  waitingforaccept String[]
 }
 model groupmessages {
   docid String @id @default(auto()) @map("_id") @db.ObjectId
@@ -97,6 +99,7 @@ model groupmessages {
   text String?
   attachmentid String?
   attachmentname String?
+  seen String[]
 }
 model school{
   docid String @id @default(auto()) @map("_id") @db.ObjectId

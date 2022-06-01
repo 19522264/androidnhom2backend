@@ -233,6 +233,7 @@ export class GroupService {
             users.push(user)
         }
         const pos = users.indexOf(email)
+        console.log(pos)
         users.splice(pos)
         return users
     }
@@ -316,8 +317,57 @@ export class GroupService {
                     }
                 }
             }
-            return users
+            // const pos = users.indexOf(email)
+            // console.log(pos)
+            return users//.splice(pos)
         }
         return []
+    }
+    async removeMember(email : string, name : string, groupid : string, type : boolean, remover? : string){
+        const result = await this.prismaService.groupinfo.findUnique({
+            where: {
+                docid: groupid
+            }
+        })
+        const arr = result.participants.filter((e : string) => {
+            return  result.participants.indexOf(email) === -1;
+        })
+        const updated = await this.prismaService.groupinfo.update({
+            where: {
+                docid: groupid
+            },
+            data: {
+                participants: arr
+            }
+        })
+        if (updated) {
+            let result1 = null
+            if (type) {
+                result1 = await this.prismaService.groupmessages.create({
+                    data: {
+                        groupid: groupid,
+                        createdAt: new Date(),
+                        system: true,
+                        text:  `${name} đã rời khỏi nhóm`
+                    }
+                })
+            }
+            else {
+                const user = await this.prismaService.userprofile.findUnique({
+                    where: {
+                        email: remover
+                    }
+                })
+                const result2 = await this.prismaService.groupmessages.create({
+                    data: {
+                        groupid: groupid,
+                        createdAt: new Date(),
+                        system: true,
+                        text:  `${user.displayName} đã xóa ${name} ra khỏi nhóm`
+                    }
+                })
+            }
+            return "removed"
+        }
     }
 }

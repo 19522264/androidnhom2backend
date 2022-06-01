@@ -180,4 +180,14 @@ export class GroupController {
     ){
         return await this.groupService.getDocList(groupid)
     }
+    @Post('removemember')
+    async removeMember(
+        @Body('email') email : string,
+        @Body('name') name : string,
+        @Body('groupid') groupid : string,
+        @Body('type') type : boolean,
+        @Body('remover') remover : string
+    ){
+        return await this.groupService.removeMember(email, name, groupid, type, remover)
+    }
 }
