@@ -358,12 +358,12 @@ export class GroupService {
         })
         //console.log(updated)
         if (updated) {
-            const user = await this.prismaService.userprofile.findUnique({
+            const user = await this.prismaService.userprofile.findFirst({
                 where: {
                     email: remover
                 }
             })
-            const user2 = await this.prismaService.userprofile.findUnique({
+            const user2 = await this.prismaService.userprofile.findFirst({
                 where: {
                     email: email
                 }
