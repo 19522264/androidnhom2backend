@@ -460,7 +460,7 @@ export class GroupService {
         return "fail"
     }
     async addtogroup(email :string, groupid: string, admin : boolean){
-        if (admin) {
+        if (admin === true) {
             const result = await this.prismaService.groupinfo.update({
                 where:{
                     docid: groupid,
@@ -471,6 +471,37 @@ export class GroupService {
                     }
                 }
             })
+            const user = await this.prismaService.userprofile.findFirst({
+                where: {
+                    email: email
+                }
+            })
+            const mes = await this.prismaService.groupmessages.create({
+                data:{
+                    groupid: groupid,
+                    system: true,
+                    createdAt: new Date(),
+                    text: `${user.displayName} đã được QTV thêm vào nhóm`
+                }
+            })
+            const update = await this.prismaService.groupinfo.findFirst({
+                where:{
+                    docid :groupid
+                }
+            })
+            if (update) {
+                let arr = update.waitingforaccept.filter(e => 
+                    {return e !== email}
+                )
+                await this.prismaService.groupinfo.update({
+                    where:{
+                        docid : groupid
+                    },
+                    data: {
+                        waitingforaccept: arr
+                    }
+                })
+            }
             if (result) return "addtogroup"
         }
         else {
@@ -487,5 +518,23 @@ export class GroupService {
             if (result) return "addtoqueue"
         }
         return "fail"
+    }
+    async getWaitting(groupid : string){
+        const waiting = await this.prismaService.groupinfo.findUnique({
+            where: {
+                docid: groupid
+            }
+        })
+        let users = []
+        if (waiting) {
+            for (const index of waiting.waitingforaccept) {
+                const user = await this.prismaService.userprofile.findFirst({
+                    where: {
+                        email: index
+                    }
+                })
+            }
+        }
+        return users
     }
 }

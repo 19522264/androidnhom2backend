@@ -204,4 +204,10 @@ export class GroupController {
     ){
         return await this.groupService.addtogroup(email, groupid, admin)
     }
+    @Get("waitting/:groupid")
+    async getWaiting(
+        @Param('groupid') groupid : string
+    ){
+        return await this.groupService.getWaitting(groupid)
+    }
 }
