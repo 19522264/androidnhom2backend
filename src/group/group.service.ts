@@ -288,4 +288,36 @@ export class GroupService {
         if (docs) return docs
         return []
     }
+    async getlistoflastfriends(email : string, list : string){
+        if (list) {
+            const parsed = JSON.parse(list)
+            let arr = []
+            let users = []
+            const friends = await this.prismaService.userlistfriends.findUnique({
+                where:{
+                    email: email
+                }
+            })
+            console.log(friends)
+            if (friends) {
+                arr = friends.listfriends.filter((e : string) => {
+                    return parsed.indexOf(e) === -1;
+                })
+            }
+            if (arr.length > 0) {
+                for (const index of arr){
+                    const user = await this.prismaService.userprofile.findUnique({
+                        where: {
+                            email: index
+                        }
+                    })
+                    if (user) {
+                        users.push(user)
+                    }
+                }
+            }
+            return users
+        }
+        return []
+    }
 }
