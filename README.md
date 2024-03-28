@@ -1,3 +1,14 @@
+<h1 align="center"> Vietnam National University, Ho Chi Minh City – VNU-HCM </h1>
+<h2 align="center"> University of Information Technology - UIT </h1>
+<p align="center">
+  <img src="https://github.com/ThienThomas/Exping/assets/91732816/46a7df38-9be8-4fde-914d-f97412bcc543" />
+</p>
+<p align="center">
+  <img src="https://github.com/ThienThomas/Exping/assets/91732816/46f57380-59e9-40ef-88b4-fab257979dec" />
+</p>
+
+#
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
